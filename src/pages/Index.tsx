@@ -10,7 +10,6 @@ import EngineeringPhilosophy from "@/components/EngineeringPhilosophy";
 import ContactSection from "@/components/ContactSection";
 import Footer from "@/components/Footer";
 import SkeletonLoader from "@/components/SkeletonLoader";
-import AnimatedBackground from "@/components/AnimatedBackground";
 
 const Index = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -25,7 +24,6 @@ const Index = () => {
       <AnimatePresence>{isLoading && <SkeletonLoader />}</AnimatePresence>
 
       <div className={isLoading ? "opacity-0" : "opacity-100 transition-opacity duration-500"}>
-        <AnimatedBackground />
         <Navbar />
         <main>
           <HeroSection />

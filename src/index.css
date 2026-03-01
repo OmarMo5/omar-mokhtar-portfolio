@@ -162,23 +162,6 @@
   100% { background-position: -200% 0; }
 }
 
-@keyframes bg-drift-1 {
-  0%, 100% { transform: translate(0, 0); }
-  33% { transform: translate(60px, 40px); }
-  66% { transform: translate(-30px, 20px); }
-}
-
-@keyframes bg-drift-2 {
-  0%, 100% { transform: translate(0, 0); }
-  33% { transform: translate(-50px, -30px); }
-  66% { transform: translate(40px, -20px); }
-}
-
-@keyframes bg-drift-3 {
-  0%, 100% { transform: translate(0, 0); }
-  50% { transform: translate(30px, -40px); }
-}
-
 @keyframes float {
   0%, 100% { transform: translateY(0px); }
   50% { transform: translateY(-10px); }
