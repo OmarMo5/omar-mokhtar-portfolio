@@ -5,8 +5,6 @@ import HeroSection from "@/components/HeroSection";
 import AboutSection from "@/components/AboutSection";
 import SkillsSection from "@/components/SkillsSection";
 import ProjectsSection from "@/components/ProjectsSection";
-import ImpactMetrics from "@/components/ImpactMetrics";
-import EngineeringPhilosophy from "@/components/EngineeringPhilosophy";
 import ContactSection from "@/components/ContactSection";
 import Footer from "@/components/Footer";
 import SkeletonLoader from "@/components/SkeletonLoader";
@@ -28,10 +26,8 @@ const Index = () => {
         <main>
           <HeroSection />
           <AboutSection />
-          <ImpactMetrics />
           <SkillsSection />
           <ProjectsSection />
-          <EngineeringPhilosophy />
           <ContactSection />
         </main>
         <Footer />
