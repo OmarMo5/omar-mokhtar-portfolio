@@ -199,8 +199,8 @@ const ProjectCarousel = ({ projects }: CarouselProps) => {
           style={{
             transformStyle: "preserve-3d",
             transform: `translateX(-50%) translateY(-50%) rotateY(${-activeIndex * angleStep}deg)`,
-            width: "320px",
-            height: "400px",
+            width: "300px",
+            height: "380px",
           }}
         >
           {projects.map((project, i) => {
