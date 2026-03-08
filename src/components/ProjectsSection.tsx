@@ -1,14 +1,5 @@
-import { ExternalLink, Github, Folder } from "lucide-react";
-import { motion } from "framer-motion";
 import ScrollReveal from "./ScrollReveal";
-
-interface Project {
-  title: string;
-  description: string;
-  features: string[];
-  technologies: string[];
-  color: string;
-}
+import ProjectCard, { type Project } from "./ProjectCard";
 
 const projects: Project[] = [
   {
@@ -104,105 +95,6 @@ const projects: Project[] = [
   },
 ];
 
-const ProjectCard = ({
-  project,
-  index,
-}: {
-  project: Project;
-  index: number;
-}) => {
-  return (
-    <ScrollReveal delay={index * 0.08}>
-      <motion.div
-        whileHover={{ y: -6 }}
-        transition={{ type: "spring", stiffness: 300, damping: 20 }}
-        className="h-full"
-      >
-        <div className="card-glass group h-full flex flex-col overflow-hidden transition-all duration-500 hover:border-primary/30 hover:shadow-[0_0_30px_-5px_hsl(var(--primary)/0.15)]">
-          {/* Project icon header */}
-          <div
-            className="relative px-6 pt-6 pb-4 flex items-center justify-between"
-          >
-            <div
-              className="w-12 h-12 rounded-xl flex items-center justify-center transition-transform duration-300 group-hover:scale-110"
-              style={{
-                background: `hsl(${project.color}, 0.12)`,
-                border: `1px solid hsl(${project.color}, 0.25)`,
-              }}
-            >
-              <Folder
-                size={24}
-                style={{ color: `hsl(${project.color})` }}
-              />
-            </div>
-            <div className="flex gap-1.5">
-              <a
-                href="#"
-                className="w-9 h-9 rounded-lg flex items-center justify-center text-muted-foreground hover:text-primary hover:bg-primary/10 transition-all"
-                aria-label="View source code"
-              >
-                <Github size={18} />
-              </a>
-              <a
-                href="#"
-                className="w-9 h-9 rounded-lg flex items-center justify-center text-muted-foreground hover:text-primary hover:bg-primary/10 transition-all"
-                aria-label="View live project"
-              >
-                <ExternalLink size={18} />
-              </a>
-            </div>
-          </div>
-
-          {/* Content */}
-          <div className="px-6 pb-3 flex-1 flex flex-col">
-            <h3 className="font-heading text-lg font-bold text-foreground mb-2 group-hover:text-primary transition-colors">
-              {project.title}
-            </h3>
-
-            <p className="text-muted-foreground text-sm leading-relaxed mb-4">
-              {project.description}
-            </p>
-
-            <ul className="space-y-1.5 mb-5 flex-1">
-              {project.features.map((feature) => (
-                <li
-                  key={feature}
-                  className="text-sm text-muted-foreground flex items-start gap-2"
-                >
-                  <span
-                    className="mt-1.5 w-1.5 h-1.5 rounded-full shrink-0"
-                    style={{ background: `hsl(${project.color})` }}
-                  />
-                  {feature}
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Tech footer */}
-          <div className="px-6 pb-6 pt-2 border-t border-border/50">
-            <div className="flex flex-wrap gap-2">
-              {project.technologies.map((tech) => (
-                <span
-                  key={tech}
-                  className="text-xs font-heading px-2.5 py-1 rounded-md"
-                  style={{
-                    color: `hsl(${project.color})`,
-                    background: `hsl(${project.color}, 0.08)`,
-                    border: `1px solid hsl(${project.color}, 0.15)`,
-                  }}
-                >
-                  {tech}
-                </span>
-              ))}
-            </div>
-          </div>
-        </div>
-      </motion.div>
-    </ScrollReveal>
-  );
-};
-
 const ProjectsSection = () => {
   return (
     <section id="projects" className="py-24 relative">
@@ -213,16 +105,12 @@ const ProjectsSection = () => {
             <h2 className="section-heading">Projects</h2>
             <div className="hidden sm:block flex-1 h-px bg-border ml-4" />
           </div>
-          <p className="section-subheading">Some things I've built</p>
+          <p className="section-subheading">Click any card to explore details</p>
         </ScrollReveal>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 auto-rows-fr">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {projects.map((project, index) => (
-            <ProjectCard
-              key={project.title}
-              project={project}
-              index={index}
-            />
+            <ProjectCard key={project.title} project={project} index={index} />
           ))}
         </div>
       </div>
