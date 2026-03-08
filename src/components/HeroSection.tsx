@@ -153,7 +153,7 @@ const HeroSection = () => {
                 Download CV
               </a>
               <a
-                href="https://github.com/omarmokhtar"
+                href="https://github.com/OmarMo5"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 px-6 py-3 rounded-lg border border-border text-foreground font-medium text-sm transition-all hover:border-primary hover:text-primary hover:scale-105 active:scale-95"
