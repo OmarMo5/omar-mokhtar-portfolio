@@ -43,7 +43,7 @@ const ContactSection = () => {
       <div className="section-container relative z-10">
         <ScrollReveal>
           <div className="flex items-center gap-3 mb-2">
-            <span className="font-heading text-primary text-sm">04.</span>
+            <span className="font-heading text-primary text-sm">05.</span>
             <h2 className="section-heading">Contact</h2>
             <div className="hidden sm:block flex-1 h-px bg-border ml-4" />
           </div>
