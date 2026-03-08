@@ -21,7 +21,7 @@ const FlipCard = ({ project, isCentered }: { project: Project; isCentered: boole
 
   return (
     <div
-      className="w-[320px] h-[400px] shrink-0 cursor-pointer"
+      className="w-[300px] h-[380px] shrink-0 cursor-pointer"
       style={{ perspective: "1200px" }}
       onClick={() => isCentered && setIsFlipped((f) => !f)}
     >
