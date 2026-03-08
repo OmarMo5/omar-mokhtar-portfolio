@@ -187,8 +187,8 @@ const ProjectCarousel = ({ projects }: CarouselProps) => {
       {/* Carousel container */}
       <div
         ref={containerRef}
-        className="relative mx-auto overflow-hidden select-none"
-        style={{ height: "480px", perspective: "1200px" }}
+        className="relative mx-auto select-none"
+        style={{ height: "520px", perspective: "1400px", overflow: "visible" }}
         onPointerDown={onPointerDown}
         onPointerUp={onPointerUp}
         onPointerLeave={() => setIsDragging(false)}
