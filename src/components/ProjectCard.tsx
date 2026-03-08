@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { ExternalLink, Github, Folder, RotateCcw } from "lucide-react";
-import { motion } from "framer-motion";
 import ScrollReveal from "./ScrollReveal";
 
 export interface Project {
@@ -17,33 +16,33 @@ const ProjectCard = ({ project, index }: { project: Project; index: number }) =>
   return (
     <ScrollReveal delay={index * 0.08}>
       <div
-        className="h-[420px] cursor-pointer [perspective:1200px]"
-        onClick={() => setIsFlipped(!isFlipped)}
+        className="h-[420px] cursor-pointer"
+        style={{ perspective: "1200px" }}
+        onClick={() => setIsFlipped((f) => !f)}
       >
-        <motion.div
-          className="relative w-full h-full [transform-style:preserve-3d] transition-transform duration-700 ease-[cubic-bezier(0.4,0,0.2,1)]"
-          animate={{ rotateY: isFlipped ? 180 : 0 }}
-          whileHover={{ y: -8, boxShadow: `0 20px 40px -10px hsl(${project.color}, 0.2)` }}
-          transition={{ type: "spring", stiffness: 260, damping: 25 }}
-          style={{ transformStyle: "preserve-3d" }}
+        <div
+          className="relative w-full h-full transition-transform duration-700 ease-[cubic-bezier(0.4,0,0.2,1)] hover:-translate-y-2"
+          style={{
+            transformStyle: "preserve-3d",
+            transform: isFlipped ? "rotateY(180deg)" : "rotateY(0deg)",
+          }}
         >
-          {/* Front */}
+          {/* FRONT */}
           <div
-            className="absolute inset-0 [backface-visibility:hidden] card-glass flex flex-col overflow-hidden group"
+            className="absolute inset-0 card-glass flex flex-col overflow-hidden group"
+            style={{ backfaceVisibility: "hidden", WebkitBackfaceVisibility: "hidden" }}
           >
             <div className="px-6 pt-6 pb-4 flex items-center justify-between">
               <div
                 className="w-12 h-12 rounded-xl flex items-center justify-center transition-transform duration-300 group-hover:scale-110"
                 style={{
-                  background: `hsl(${project.color}, 0.12)`,
-                  border: `1px solid hsl(${project.color}, 0.25)`,
+                  background: `hsl(${project.color} / 0.12)`,
+                  border: `1px solid hsl(${project.color} / 0.25)`,
                 }}
               >
                 <Folder size={24} style={{ color: `hsl(${project.color})` }} />
               </div>
-              <span
-                className="text-xs font-heading px-2.5 py-1 rounded-md text-muted-foreground border border-border/50"
-              >
+              <span className="text-xs font-heading px-2.5 py-1 rounded-md text-muted-foreground border border-border/50">
                 Click to flip
               </span>
             </div>
@@ -63,8 +62,8 @@ const ProjectCard = ({ project, index }: { project: Project; index: number }) =>
                       className="text-xs font-heading px-2.5 py-1 rounded-md"
                       style={{
                         color: `hsl(${project.color})`,
-                        background: `hsl(${project.color}, 0.08)`,
-                        border: `1px solid hsl(${project.color}, 0.15)`,
+                        background: `hsl(${project.color} / 0.08)`,
+                        border: `1px solid hsl(${project.color} / 0.15)`,
                       }}
                     >
                       {tech}
@@ -75,9 +74,14 @@ const ProjectCard = ({ project, index }: { project: Project; index: number }) =>
             </div>
           </div>
 
-          {/* Back */}
+          {/* BACK */}
           <div
-            className="absolute inset-0 [backface-visibility:hidden] [transform:rotateY(180deg)] card-glass flex flex-col overflow-hidden"
+            className="absolute inset-0 card-glass flex flex-col overflow-hidden"
+            style={{
+              backfaceVisibility: "hidden",
+              WebkitBackfaceVisibility: "hidden",
+              transform: "rotateY(180deg)",
+            }}
           >
             <div className="px-6 pt-5 pb-3 flex items-center justify-between border-b border-border/50">
               <h3 className="font-heading text-base font-bold text-primary">
@@ -119,8 +123,8 @@ const ProjectCard = ({ project, index }: { project: Project; index: number }) =>
                     className="text-xs font-heading px-2 py-0.5 rounded-md"
                     style={{
                       color: `hsl(${project.color})`,
-                      background: `hsl(${project.color}, 0.08)`,
-                      border: `1px solid hsl(${project.color}, 0.15)`,
+                      background: `hsl(${project.color} / 0.08)`,
+                      border: `1px solid hsl(${project.color} / 0.15)`,
                     }}
                   >
                     {tech}
@@ -141,15 +145,13 @@ const ProjectCard = ({ project, index }: { project: Project; index: number }) =>
                 href="#"
                 onClick={(e) => e.stopPropagation()}
                 className="flex-1 flex items-center justify-center gap-2 text-sm font-heading py-2 rounded-lg text-primary-foreground transition-all"
-                style={{
-                  background: `hsl(${project.color})`,
-                }}
+                style={{ background: `hsl(${project.color})` }}
               >
                 <ExternalLink size={15} /> Live Demo
               </a>
             </div>
           </div>
-        </motion.div>
+        </div>
       </div>
     </ScrollReveal>
   );
