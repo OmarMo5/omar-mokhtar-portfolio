@@ -143,7 +143,7 @@ const ProjectCarousel = ({ projects }: CarouselProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
 
   const angleStep = 360 / count;
-  const radius = 420; // translateZ distance
+  const radius = 480;
 
   const next = useCallback(() => setActiveIndex((i) => (i + 1) % count), [count]);
   const prev = useCallback(() => setActiveIndex((i) => (i - 1 + count) % count), [count]);
