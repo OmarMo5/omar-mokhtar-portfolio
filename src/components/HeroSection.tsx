@@ -162,7 +162,7 @@ const HeroSection = () => {
                 GitHub
               </a>
               <a
-                href="https://linkedin.com/in/omarmokhtar"
+                href="https://www.linkedin.com/in/omar-mokhtar-3968ba220"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 px-6 py-3 rounded-lg border border-border text-foreground font-medium text-sm transition-all hover:border-primary hover:text-primary hover:scale-105 active:scale-95"
