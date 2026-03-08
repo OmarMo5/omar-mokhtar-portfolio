@@ -136,13 +136,13 @@ const HeroSection = () => {
               transition={{ delay: 1.1, duration: 0.6 }}
               className="flex flex-wrap gap-4 justify-center lg:justify-start"
             >
-              <a
-                href="mailto:omarmo5tar12@gmail.com?subject=Portfolio%20Contact"
+              <button
+                onClick={() => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })}
                 className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-primary text-primary-foreground font-medium text-sm transition-all hover:shadow-lg hover:shadow-primary/25 hover:scale-105 active:scale-95"
               >
                 <Mail size={18} />
                 Get In Touch
-              </a>
+              </button>
               <a
                 href="https://drive.google.com/file/d/13mCw1gn1S8EzgQfYYz390Mkn3M4FT9O0/view?usp=sharing"
                 target="_blank"
