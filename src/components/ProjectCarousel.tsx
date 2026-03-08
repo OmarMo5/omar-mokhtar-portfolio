@@ -21,7 +21,7 @@ const FlipCard = ({ project, isCentered }: { project: Project; isCentered: boole
 
   return (
     <div
-      className="w-[320px] h-[400px] shrink-0 cursor-pointer"
+      className="w-[300px] h-[380px] shrink-0 cursor-pointer"
       style={{ perspective: "1200px" }}
       onClick={() => isCentered && setIsFlipped((f) => !f)}
     >
@@ -143,7 +143,7 @@ const ProjectCarousel = ({ projects }: CarouselProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
 
   const angleStep = 360 / count;
-  const radius = 420; // translateZ distance
+  const radius = 480;
 
   const next = useCallback(() => setActiveIndex((i) => (i + 1) % count), [count]);
   const prev = useCallback(() => setActiveIndex((i) => (i - 1 + count) % count), [count]);
@@ -187,8 +187,8 @@ const ProjectCarousel = ({ projects }: CarouselProps) => {
       {/* Carousel container */}
       <div
         ref={containerRef}
-        className="relative mx-auto overflow-hidden select-none"
-        style={{ height: "480px", perspective: "1200px" }}
+        className="relative mx-auto select-none"
+        style={{ height: "520px", perspective: "1400px", overflow: "visible" }}
         onPointerDown={onPointerDown}
         onPointerUp={onPointerUp}
         onPointerLeave={() => setIsDragging(false)}
@@ -199,8 +199,8 @@ const ProjectCarousel = ({ projects }: CarouselProps) => {
           style={{
             transformStyle: "preserve-3d",
             transform: `translateX(-50%) translateY(-50%) rotateY(${-activeIndex * angleStep}deg)`,
-            width: "320px",
-            height: "400px",
+            width: "300px",
+            height: "380px",
           }}
         >
           {projects.map((project, i) => {
