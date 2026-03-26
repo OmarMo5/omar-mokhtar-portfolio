@@ -213,8 +213,8 @@ const ProjectCarousel = ({ projects }: CarouselProps) => {
                 style={{
                   transformStyle: "preserve-3d",
                   transform: `rotateY(${angle}deg) translateZ(${radius}px)`,
-                  opacity: isCentered ? 1 : 0.5,
-                  filter: isCentered ? "none" : "brightness(0.6)",
+                  opacity: isCentered ? 1 : 0.45,
+                  filter: isCentered ? "none" : "brightness(0.55) blur(1px)",
                 }}
               >
                 <FlipCard project={project} isCentered={isCentered} />
