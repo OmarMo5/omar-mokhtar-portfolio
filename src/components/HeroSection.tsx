@@ -106,18 +106,7 @@ const HeroSection = () => {
             >
               Software Engineer specialized in Back-End development with solid experience
               in Front-End technologies. Passionate about building scalable, high-quality
-              web applications.
-            </motion.p>
-
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.9, duration: 0.6 }}
-              className="text-muted-foreground text-sm md:text-base max-w-2xl mb-4 leading-relaxed mx-auto lg:mx-0"
-            >
-              Deeply interested in modern challenges in theoretical computer science
-              and artificial intelligence research. Continuously focused on improving
-              engineering skills and delivering clean, maintainable solutions.
+              web applications and continuously improving software engineering skills.
             </motion.p>
 
             <motion.div

@@ -43,14 +43,19 @@ const AboutSection = () => {
                     Who I Am
                   </h3>
                   <p className="text-muted-foreground leading-relaxed">
-                    I am <span className="text-foreground font-medium">Omar Mokhtar Mohamed</span>, a software engineer
-                    with a passion for theoretical computer science and AI research. I specialize in building
-                    modern, responsive web applications with clean code and great user experiences.
+                    I am <span className="text-foreground font-medium">Omar Mokhtar Mohamed</span>, a Software Engineer specialized in Back-End development, with solid hands-on experience in Front-End technologies. I enjoy building scalable, efficient, and high-quality web applications, and I'm always focused on writing clean, maintainable code that follows modern engineering standards.
                   </p>
                   <p className="text-muted-foreground leading-relaxed mt-3">
-                    With expertise in both front-end and back-end development, I enjoy working with technologies
-                    like React.js, Redux, PHP, Laravel, and exploring the frontiers of Machine Learning
-                    with TensorFlow, Keras, and PyTorch.
+                    My primary expertise lies in Back-End development using PHP and Laravel, where I design and build robust systems, manage databases efficiently using MySQL, and handle business logic with a strong focus on performance and scalability.
+                  </p>
+                  <p className="text-muted-foreground leading-relaxed mt-3">
+                    I also have strong experience in Front-End development, working with HTML, CSS, Bootstrap, Tailwind CSS, JavaScript, TypeScript, React.js, Redux, and Hooks — allowing me to build complete, full-stack applications with seamless user experiences.
+                  </p>
+                  <p className="text-muted-foreground leading-relaxed mt-3">
+                    I'm interested in automation and workflow optimization with practical experience using n8n, and I have a good foundational understanding of Docker for containerized environments. Beyond development, I have a deep interest in theoretical computer science and artificial intelligence.
+                  </p>
+                  <p className="text-muted-foreground leading-relaxed mt-3">
+                    I built this portfolio to showcase not only my projects, but also how I think, design systems, and solve problems. I'm always learning, always improving, and constantly looking for new challenges.
                   </p>
                 </div>
               </div>
