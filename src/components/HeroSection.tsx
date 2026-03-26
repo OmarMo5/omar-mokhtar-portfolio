@@ -102,7 +102,7 @@ const HeroSection = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.8, duration: 0.6 }}
-              className="text-muted-foreground text-base md:text-lg max-w-2xl mb-2 leading-relaxed mx-auto lg:mx-0"
+              className="text-muted-foreground text-base md:text-lg max-w-2xl mb-4 leading-relaxed mx-auto lg:mx-0"
             >
               Software Engineer specialized in Back-End development with solid experience
               in Front-End technologies. Passionate about building scalable, high-quality
