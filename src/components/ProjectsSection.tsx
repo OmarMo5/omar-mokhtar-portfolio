@@ -55,7 +55,7 @@ const projects: Project[] = [
 
 const ProjectsSection = () => {
   return (
-    <section id="projects" className="py-24 relative" style={{ background: 'linear-gradient(180deg, hsl(222, 47%, 5%) 0%, hsl(222, 47%, 6%) 50%, hsl(222, 47%, 5%) 100%)', boxShadow: 'inset 0 8px 24px -8px hsl(0, 0%, 0%, 0.4), inset 0 -8px 24px -8px hsl(0, 0%, 0%, 0.4)' }}>
+    <section id="projects" className="py-16 relative" style={{ background: 'linear-gradient(180deg, hsl(222, 47%, 5%) 0%, hsl(222, 47%, 6%) 50%, hsl(222, 47%, 5%) 100%)', boxShadow: 'inset 0 4px 16px -6px hsl(0, 0%, 0%, 0.3), inset 0 -4px 16px -6px hsl(0, 0%, 0%, 0.3)' }}>
       <div className="section-container">
         <ScrollReveal>
           <div className="flex items-center gap-3 mb-2">
