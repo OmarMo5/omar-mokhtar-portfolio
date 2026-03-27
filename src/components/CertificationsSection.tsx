@@ -127,7 +127,7 @@ const CertCard = ({ cert, index }: { cert: Certification; index: number }) => {
 
 const CertificationsSection = () => {
   return (
-    <section id="certifications" className="py-24 relative">
+    <section id="certifications" className="py-14 sm:py-24 relative">
       <div className="absolute inset-0 bg-secondary/30" />
       <div className="section-container relative z-10">
         <ScrollReveal>
@@ -144,7 +144,7 @@ const CertificationsSection = () => {
           {/* Vertical line */}
           <div className="absolute left-5 md:left-1/2 top-0 bottom-0 w-px bg-border md:-translate-x-px" />
 
-          <div className="flex flex-col gap-10 md:gap-14">
+          <div className="flex flex-col gap-6 sm:gap-10 md:gap-14">
             {certifications.map((cert, index) => {
               const isLeft = index % 2 === 0;
 

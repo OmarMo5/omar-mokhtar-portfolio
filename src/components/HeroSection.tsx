@@ -57,8 +57,8 @@ const HeroSection = () => {
         ))}
       </div>
 
-      <div className="section-container relative z-10 py-20">
-        <div className="flex flex-col-reverse lg:flex-row items-center gap-12 lg:gap-16">
+      <div className="section-container relative z-10 py-12 sm:py-20">
+        <div className="flex flex-col-reverse lg:flex-row items-center gap-8 lg:gap-16">
           {/* Text content */}
           <div className="flex-1 text-center lg:text-left">
             <motion.p
@@ -74,7 +74,7 @@ const HeroSection = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4, duration: 0.6 }}
-              className="text-4xl sm:text-5xl md:text-7xl font-bold text-foreground mb-2 leading-tight"
+              className="text-3xl sm:text-5xl md:text-7xl font-bold text-foreground mb-2 leading-tight"
             >
               Omar Mokhtar
             </motion.h1>
@@ -83,7 +83,7 @@ const HeroSection = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.6, duration: 0.6 }}
-              className="text-2xl sm:text-3xl md:text-5xl font-bold mb-6 h-14 md:h-16 flex items-center justify-center lg:justify-start"
+              className="text-xl sm:text-3xl md:text-5xl font-bold mb-4 sm:mb-6 h-10 sm:h-14 md:h-16 flex items-center justify-center lg:justify-start"
             >
               <span className="text-muted-foreground">I'm a </span>
               <motion.span
@@ -123,11 +123,11 @@ const HeroSection = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 1.1, duration: 0.6 }}
-              className="flex flex-wrap gap-4 justify-center lg:justify-start"
+              className="flex flex-wrap gap-2.5 sm:gap-4 justify-center lg:justify-start"
             >
               <button
                 onClick={() => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })}
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-primary text-primary-foreground font-medium text-sm transition-all hover:shadow-lg hover:shadow-primary/25 hover:scale-105 active:scale-95"
+                className="inline-flex items-center gap-2 px-4 sm:px-6 py-2.5 sm:py-3 rounded-lg bg-primary text-primary-foreground font-medium text-xs sm:text-sm transition-all hover:shadow-lg hover:shadow-primary/25 hover:scale-105 active:scale-95"
               >
                 <Mail size={18} />
                 Get In Touch
@@ -136,7 +136,7 @@ const HeroSection = () => {
                 href="https://drive.google.com/file/d/13mCw1gn1S8EzgQfYYz390Mkn3M4FT9O0/view?usp=sharing"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-secondary text-secondary-foreground font-medium text-sm transition-all hover:shadow-lg hover:shadow-primary/25 hover:scale-105 active:scale-95"
+                className="inline-flex items-center gap-2 px-4 sm:px-6 py-2.5 sm:py-3 rounded-lg bg-secondary text-secondary-foreground font-medium text-xs sm:text-sm transition-all hover:shadow-lg hover:shadow-primary/25 hover:scale-105 active:scale-95"
               >
                 <ArrowDown size={18} />
                 Download CV
@@ -145,7 +145,7 @@ const HeroSection = () => {
                 href="https://github.com/OmarMo5"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-lg border border-border text-foreground font-medium text-sm transition-all hover:border-primary hover:text-primary hover:scale-105 active:scale-95"
+                className="inline-flex items-center gap-2 px-4 sm:px-6 py-2.5 sm:py-3 rounded-lg border border-border text-foreground font-medium text-xs sm:text-sm transition-all hover:border-primary hover:text-primary hover:scale-105 active:scale-95"
               >
                 <Github size={18} />
                 GitHub
@@ -154,7 +154,7 @@ const HeroSection = () => {
                 href="https://www.linkedin.com/in/omar-mokhtar-3968ba220"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-lg border border-border text-foreground font-medium text-sm transition-all hover:border-primary hover:text-primary hover:scale-105 active:scale-95"
+                className="inline-flex items-center gap-2 px-4 sm:px-6 py-2.5 sm:py-3 rounded-lg border border-border text-foreground font-medium text-xs sm:text-sm transition-all hover:border-primary hover:text-primary hover:scale-105 active:scale-95"
               >
                 <Linkedin size={18} />
                 LinkedIn
@@ -169,7 +169,7 @@ const HeroSection = () => {
             transition={{ delay: 0.3, duration: 0.8, ease: "easeOut" }}
             className="relative shrink-0"
           >
-            <div className="relative w-56 h-56 sm:w-64 sm:h-64 lg:w-80 lg:h-80">
+            <div className="relative w-40 h-40 sm:w-64 sm:h-64 lg:w-80 lg:h-80">
               {/* Glow ring */}
               <div className="absolute inset-0 rounded-full bg-gradient-to-br from-primary/30 to-accent/10 blur-xl animate-pulse" />
               {/* Outer ring */}

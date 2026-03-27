@@ -21,7 +21,7 @@ const experiences = [
 
 const AboutSection = () => {
   return (
-    <section id="about" className="py-24 relative">
+    <section id="about" className="py-14 sm:py-24 relative">
       <div className="section-container">
         <ScrollReveal>
           <div className="flex items-center gap-3 mb-2">
@@ -32,7 +32,7 @@ const AboutSection = () => {
           <p className="section-subheading">Get to know me better</p>
         </ScrollReveal>
 
-        <div className="grid md:grid-cols-2 gap-12 items-start">
+        <div className="grid md:grid-cols-2 gap-8 sm:gap-12 items-start">
           {/* Bio */}
           <ScrollReveal delay={0.1} direction="left">
             <div className="space-y-6">
