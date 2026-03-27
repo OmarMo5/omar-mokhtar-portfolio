@@ -38,7 +38,7 @@ const ContactSection = () => {
   };
 
   return (
-    <section id="contact" className="py-24 relative">
+    <section id="contact" className="py-14 sm:py-24 relative">
       <div className="absolute inset-0 bg-secondary/30" />
       <div className="section-container relative z-10">
         <ScrollReveal>
@@ -50,7 +50,7 @@ const ContactSection = () => {
           <p className="section-subheading">Let's work together</p>
         </ScrollReveal>
 
-        <div className="grid md:grid-cols-2 gap-12">
+        <div className="grid md:grid-cols-2 gap-8 sm:gap-12">
           <ScrollReveal delay={0.1} direction="left">
             <div className="space-y-8">
               <p className="text-muted-foreground leading-relaxed">

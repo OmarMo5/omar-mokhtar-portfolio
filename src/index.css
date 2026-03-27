@@ -81,16 +81,16 @@
 
 @layer components {
   .section-container {
-    @apply max-w-6xl mx-auto px-4 sm:px-6 lg:px-8;
+    @apply max-w-6xl mx-auto px-5 sm:px-6 lg:px-8;
   }
 
   .section-heading {
-    @apply text-3xl md:text-4xl font-bold mb-2;
+    @apply text-2xl sm:text-3xl md:text-4xl font-bold mb-2;
     font-family: var(--font-heading);
   }
 
   .section-subheading {
-    @apply text-muted-foreground text-lg mb-12;
+    @apply text-muted-foreground text-base sm:text-lg mb-8 sm:mb-12;
   }
 
   .text-gradient {
