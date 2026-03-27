@@ -3,6 +3,7 @@ import ScrollReveal from "./ScrollReveal";
 import logoUdacity from "@/assets/logo-udacity.png";
 import logo365ds from "@/assets/logo-365ds.png";
 import logoMicrosoft from "@/assets/logo-microsoft.png";
+import { useEffect, useRef, useState, useCallback } from "react";
 
 interface Certification {
   title: string;
@@ -57,71 +58,136 @@ const certifications: Certification[] = [
   },
 ];
 
-const TimelineNode = ({ index }: { index: number }) => (
-  <div className="relative flex items-center justify-center z-10">
-    <ScrollReveal delay={index * 0.12} direction="none">
-      <div className="w-4 h-4 rounded-full bg-primary border-[3px] border-background shadow-[0_0_12px_hsl(174,72%,56%,0.4)] transition-shadow duration-500" />
-    </ScrollReveal>
-  </div>
-);
-
-const CertCard = ({ cert, index }: { cert: Certification; index: number }) => {
+const CertCard = ({ cert }: { cert: Certification }) => {
   const link = cert.certificateFile || cert.credentialUrl || "#";
-  const isLeft = index % 2 === 0;
 
   return (
-    <ScrollReveal delay={index * 0.1} direction={isLeft ? "left" : "right"}>
-      <div className="card-glass p-5 sm:p-6 flex flex-col transition-all duration-300 hover:border-primary/30 hover:shadow-[0_8px_30px_-8px_hsl(174,72%,56%,0.15)] hover:-translate-y-1 group">
-        {/* Logo + Org */}
-        <div className="flex items-center gap-3 mb-4">
-          <div className="w-10 h-10 rounded-lg bg-secondary/60 border border-border flex items-center justify-center overflow-hidden shrink-0 p-1.5">
-            <img
-              src={cert.logo}
-              alt={cert.organization}
-              className="w-full h-full object-contain"
-              loading="lazy"
-            />
-          </div>
-          <div className="min-w-0">
-            <p className="text-xs font-medium text-primary font-heading truncate">
-              {cert.organization}
-            </p>
-            {cert.issued && (
-              <p className="text-[11px] text-muted-foreground flex items-center gap-1 mt-0.5">
-                <Calendar size={10} />
-                {cert.issued}
-              </p>
-            )}
-          </div>
+    <div className="card-glass p-5 sm:p-6 flex flex-col transition-all duration-300 hover:border-primary/30 hover:shadow-[0_8px_30px_-8px_hsl(174,72%,56%,0.15)] group w-[300px] sm:w-[340px] shrink-0 h-[220px] sm:h-[240px]">
+      {/* Logo + Org */}
+      <div className="flex items-center gap-3 mb-3">
+        <div className="w-10 h-10 rounded-lg bg-secondary/60 border border-border flex items-center justify-center overflow-hidden shrink-0 p-1.5">
+          <img
+            src={cert.logo}
+            alt={cert.organization}
+            className="w-full h-full object-contain"
+            loading="lazy"
+          />
         </div>
-
-        {/* Title */}
-        <h3 className="font-heading text-sm sm:text-base font-semibold text-foreground mb-2 leading-snug">
-          {cert.title}
-        </h3>
-
-        {/* Description */}
-        {cert.description && (
-          <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed mb-3">
-            {cert.description}
+        <div className="min-w-0">
+          <p className="text-xs font-medium text-primary font-heading truncate">
+            {cert.organization}
           </p>
-        )}
-
-        <div className="flex-1" />
-
-        {/* Action */}
-        <a
-          href={link}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 mt-3 px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-medium border border-primary/20 text-primary bg-primary/5 transition-all duration-300 hover:bg-primary/10 hover:border-primary/40 hover:shadow-md hover:shadow-primary/10 w-fit"
-        >
-          <Award size={14} />
-          {cert.actionLabel}
-          <ExternalLink size={12} className="opacity-60" />
-        </a>
+          {cert.issued && (
+            <p className="text-[11px] text-muted-foreground flex items-center gap-1 mt-0.5">
+              <Calendar size={10} />
+              {cert.issued}
+            </p>
+          )}
+        </div>
       </div>
-    </ScrollReveal>
+
+      {/* Title */}
+      <h3 className="font-heading text-sm sm:text-base font-semibold text-foreground mb-2 leading-snug line-clamp-2">
+        {cert.title}
+      </h3>
+
+      {/* Description */}
+      {cert.description && (
+        <p className="text-xs text-muted-foreground leading-relaxed mb-2 line-clamp-2">
+          {cert.description}
+        </p>
+      )}
+
+      <div className="flex-1" />
+
+      {/* Action */}
+      <a
+        href={link}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-medium border border-primary/20 text-primary bg-primary/5 transition-all duration-300 hover:bg-primary/10 hover:border-primary/40 hover:shadow-md hover:shadow-primary/10 w-fit"
+      >
+        <Award size={14} />
+        {cert.actionLabel}
+        <ExternalLink size={12} className="opacity-60" />
+      </a>
+    </div>
+  );
+};
+
+const InfiniteCarousel = () => {
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const [isPaused, setIsPaused] = useState(false);
+  const animationRef = useRef<number>();
+  const scrollPos = useRef(0);
+  const speed = useRef(0.5);
+
+  // Duplicate cards for seamless loop
+  const items = [...certifications, ...certifications, ...certifications];
+
+  const animate = useCallback(() => {
+    if (!scrollRef.current) return;
+    const container = scrollRef.current;
+    const singleSetWidth = container.scrollWidth / 3;
+
+    if (!isPaused) {
+      scrollPos.current += speed.current;
+      if (scrollPos.current >= singleSetWidth) {
+        scrollPos.current -= singleSetWidth;
+      }
+      container.scrollLeft = scrollPos.current;
+    }
+
+    animationRef.current = requestAnimationFrame(animate);
+  }, [isPaused]);
+
+  useEffect(() => {
+    animationRef.current = requestAnimationFrame(animate);
+    return () => {
+      if (animationRef.current) cancelAnimationFrame(animationRef.current);
+    };
+  }, [animate]);
+
+  // Touch support
+  const touchStart = useRef(0);
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setIsPaused(true);
+    touchStart.current = e.touches[0].clientX;
+  };
+  const handleTouchMove = (e: React.TouchEvent) => {
+    if (!scrollRef.current) return;
+    const diff = touchStart.current - e.touches[0].clientX;
+    scrollPos.current += diff;
+    touchStart.current = e.touches[0].clientX;
+    scrollRef.current.scrollLeft = scrollPos.current;
+  };
+  const handleTouchEnd = () => {
+    setIsPaused(false);
+  };
+
+  return (
+    <div
+      className="relative overflow-hidden"
+      onMouseEnter={() => setIsPaused(true)}
+      onMouseLeave={() => setIsPaused(false)}
+    >
+      {/* Fade edges */}
+      <div className="absolute left-0 top-0 bottom-0 w-12 sm:w-20 bg-gradient-to-r from-background to-transparent z-10 pointer-events-none" />
+      <div className="absolute right-0 top-0 bottom-0 w-12 sm:w-20 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none" />
+
+      <div
+        ref={scrollRef}
+        className="flex gap-4 sm:gap-6 overflow-hidden scrollbar-hide py-2"
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
+        style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+      >
+        {items.map((cert, index) => (
+          <CertCard key={`${cert.title}-${index}`} cert={cert} />
+        ))}
+      </div>
+    </div>
   );
 };
 
@@ -139,44 +205,9 @@ const CertificationsSection = () => {
           <p className="section-subheading">Professional credentials & achievements</p>
         </ScrollReveal>
 
-        {/* Timeline */}
-        <div className="relative">
-          {/* Vertical line */}
-          <div className="absolute left-5 md:left-1/2 top-0 bottom-0 w-px bg-border md:-translate-x-px" />
-
-          <div className="flex flex-col gap-6 sm:gap-10 md:gap-14">
-            {certifications.map((cert, index) => {
-              const isLeft = index % 2 === 0;
-
-              return (
-                <div
-                  key={cert.title}
-                  className="relative grid grid-cols-[40px_1fr] md:grid-cols-[1fr_40px_1fr] items-start"
-                >
-                  {/* Desktop left card or spacer */}
-                  <div className="hidden md:block">
-                    {isLeft ? <CertCard cert={cert} index={index} /> : <div />}
-                  </div>
-
-                  {/* Timeline node */}
-                  <div className="flex justify-center pt-5">
-                    <TimelineNode index={index} />
-                  </div>
-
-                  {/* Desktop right card or spacer */}
-                  <div className="hidden md:block">
-                    {!isLeft ? <CertCard cert={cert} index={index} /> : <div />}
-                  </div>
-
-                  {/* Mobile card (always right of timeline) */}
-                  <div className="md:hidden col-start-2">
-                    <CertCard cert={cert} index={index} />
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        </div>
+        <ScrollReveal delay={0.15}>
+          <InfiniteCarousel />
+        </ScrollReveal>
       </div>
     </section>
   );
