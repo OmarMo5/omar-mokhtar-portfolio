@@ -55,7 +55,7 @@ const projects: Project[] = [
 
 const ProjectsSection = () => {
   return (
-    <section id="projects" className="py-16 relative" style={{ background: 'linear-gradient(180deg, hsl(222, 47%, 5%) 0%, hsl(222, 47%, 6%) 50%, hsl(222, 47%, 5%) 100%)', boxShadow: 'inset 0 4px 16px -6px hsl(0, 0%, 0%, 0.3), inset 0 -4px 16px -6px hsl(0, 0%, 0%, 0.3)' }}>
+    <section id="projects" className="py-10 sm:py-16 relative" style={{ background: 'linear-gradient(180deg, hsl(222, 47%, 5%) 0%, hsl(222, 47%, 6%) 50%, hsl(222, 47%, 5%) 100%)', boxShadow: 'inset 0 4px 16px -6px hsl(0, 0%, 0%, 0.3), inset 0 -4px 16px -6px hsl(0, 0%, 0%, 0.3)' }}>
       <div className="section-container">
         <ScrollReveal>
           <div className="flex items-center gap-3 mb-2">
@@ -63,7 +63,7 @@ const ProjectsSection = () => {
             <h2 className="section-heading">Projects</h2>
             <div className="hidden sm:block flex-1 h-px bg-border ml-4" />
           </div>
-          <p className="section-subheading">Drag, scroll, or use arrows to explore · Click a card to flip</p>
+          <p className="section-subheading text-sm sm:text-base">Drag, scroll, or use arrows to explore · Tap a card to flip</p>
         </ScrollReveal>
 
         <ScrollReveal>
