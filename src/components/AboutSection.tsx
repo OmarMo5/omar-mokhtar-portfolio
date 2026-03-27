@@ -1,5 +1,6 @@
+import { useState, useRef } from "react";
 import ScrollReveal from "./ScrollReveal";
-import { GraduationCap, Briefcase, User } from "lucide-react";
+import { GraduationCap, Briefcase, User, ChevronDown } from "lucide-react";
 
 const experiences = [
   {
@@ -20,6 +21,9 @@ const experiences = [
 ];
 
 const AboutSection = () => {
+  const [expanded, setExpanded] = useState(false);
+  const contentRef = useRef<HTMLDivElement>(null);
+
   return (
     <section id="about" className="py-14 sm:py-24 relative">
       <div className="section-container">
@@ -45,18 +49,41 @@ const AboutSection = () => {
                   <p className="text-muted-foreground leading-relaxed">
                     I am <span className="text-foreground font-medium">Omar Mokhtar Mohamed</span>, a Software Engineer specialized in Back-End development, with solid hands-on experience in Front-End technologies. I enjoy building scalable, efficient, and high-quality web applications, and I'm always focused on writing clean, maintainable code that follows modern engineering standards.
                   </p>
-                  <p className="text-muted-foreground leading-relaxed mt-3">
-                    My primary expertise lies in Back-End development using PHP and Laravel, where I design and build robust systems, manage databases efficiently using MySQL, and handle business logic with a strong focus on performance and scalability.
-                  </p>
-                  <p className="text-muted-foreground leading-relaxed mt-3">
-                    I also have strong experience in Front-End development, working with HTML, CSS, Bootstrap, Tailwind CSS, JavaScript, TypeScript, React.js, Redux, and Hooks — allowing me to build complete, full-stack applications with seamless user experiences.
-                  </p>
-                  <p className="text-muted-foreground leading-relaxed mt-3">
-                    I'm interested in automation and workflow optimization with practical experience using n8n, and I have a good foundational understanding of Docker for containerized environments. Beyond development, I have a deep interest in theoretical computer science and artificial intelligence.
-                  </p>
-                  <p className="text-muted-foreground leading-relaxed mt-3">
-                    I built this portfolio to showcase not only my projects, but also how I think, design systems, and solve problems. I'm always learning, always improving, and constantly looking for new challenges.
-                  </p>
+
+                  {/* Collapsible content */}
+                  <div
+                    ref={contentRef}
+                    className="overflow-hidden transition-all duration-500 ease-in-out"
+                    style={{
+                      maxHeight: expanded ? contentRef.current?.scrollHeight + "px" : "0px",
+                      opacity: expanded ? 1 : 0,
+                    }}
+                  >
+                    <p className="text-muted-foreground leading-relaxed mt-3">
+                      My primary expertise lies in Back-End development using PHP and Laravel, where I design and build robust systems, manage databases efficiently using MySQL, and handle business logic with a strong focus on performance and scalability.
+                    </p>
+                    <p className="text-muted-foreground leading-relaxed mt-3">
+                      I also have strong experience in Front-End development, working with HTML, CSS, Bootstrap, Tailwind CSS, JavaScript, TypeScript, React.js, Redux, and Hooks — allowing me to build complete, full-stack applications with seamless user experiences.
+                    </p>
+                    <p className="text-muted-foreground leading-relaxed mt-3">
+                      I'm interested in automation and workflow optimization with practical experience using n8n, and I have a good foundational understanding of Docker for containerized environments. Beyond development, I have a deep interest in theoretical computer science and artificial intelligence.
+                    </p>
+                    <p className="text-muted-foreground leading-relaxed mt-3">
+                      I built this portfolio to showcase not only my projects, but also how I think, design systems, and solve problems. I'm always learning, always improving, and constantly looking for new challenges.
+                    </p>
+                  </div>
+
+                  {/* Read More / Less button */}
+                  <button
+                    onClick={() => setExpanded(!expanded)}
+                    className="inline-flex items-center gap-1.5 mt-3 text-sm font-medium text-primary hover:text-primary/80 transition-colors duration-200 group"
+                  >
+                    {expanded ? "Read Less" : "Read More"}
+                    <ChevronDown
+                      size={16}
+                      className={`transition-transform duration-300 ${expanded ? "rotate-180" : ""}`}
+                    />
+                  </button>
                 </div>
               </div>
 
