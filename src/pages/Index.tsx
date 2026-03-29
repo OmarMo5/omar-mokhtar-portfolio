@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { AnimatePresence } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
 import AboutSection from "@/components/AboutSection";
@@ -22,7 +22,11 @@ const Index = () => {
     <>
       <AnimatePresence>{isLoading && <SkeletonLoader />}</AnimatePresence>
 
-      <div className={isLoading ? "opacity-0" : "opacity-100 transition-opacity duration-500"}>
+      <motion.div
+        initial={{ opacity: 0, y: 10 }}
+        animate={isLoading ? { opacity: 0, y: 10 } : { opacity: 1, y: 0 }}
+        transition={{ duration: 0.7, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+      >
         <Navbar />
         <main>
           <HeroSection />
