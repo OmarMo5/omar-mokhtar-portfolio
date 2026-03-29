@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { AnimatePresence } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
 import AboutSection from "@/components/AboutSection";
@@ -14,7 +14,7 @@ const Index = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const timer = setTimeout(() => setIsLoading(false), 1800);
+    const timer = setTimeout(() => setIsLoading(false), 1600);
     return () => clearTimeout(timer);
   }, []);
 
@@ -22,7 +22,11 @@ const Index = () => {
     <>
       <AnimatePresence>{isLoading && <SkeletonLoader />}</AnimatePresence>
 
-      <div className={isLoading ? "opacity-0" : "opacity-100 transition-opacity duration-500"}>
+      <motion.div
+        initial={{ opacity: 0, y: 10 }}
+        animate={isLoading ? { opacity: 0, y: 10 } : { opacity: 1, y: 0 }}
+        transition={{ duration: 0.7, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+      >
         <Navbar />
         <main>
           <HeroSection />
@@ -33,7 +37,7 @@ const Index = () => {
           <ContactSection />
         </main>
         <Footer />
-      </div>
+      </motion.div>
     </>
   );
 };
