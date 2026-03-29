@@ -14,7 +14,7 @@ const Index = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const timer = setTimeout(() => setIsLoading(false), 1800);
+    const timer = setTimeout(() => setIsLoading(false), 1600);
     return () => clearTimeout(timer);
   }, []);
 
@@ -33,7 +33,7 @@ const Index = () => {
           <ContactSection />
         </main>
         <Footer />
-      </div>
+      </motion.div>
     </>
   );
 };
