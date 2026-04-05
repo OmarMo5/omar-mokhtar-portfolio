@@ -7,7 +7,7 @@ const experiences = [
     role: "Back-End Developer",
     company: "AL-Salam ASC",
     types: ["Full-Time (Nov 2025 – Present)", "Part-Time (Apr 2025 – Nov 2025)"],
-    location: "",
+    location: "Cairo",
     responsibilities: [
       "Improved website development, design, and SEO performance",
       "Enhanced and optimized websites using WordPress",
@@ -23,7 +23,7 @@ const experiences = [
     company: "Momentum Solutions Co.",
     types: ["Hybrid"],
     location: "Cairo, Egypt",
-    duration: "Apr 2025 – Present",
+    duration: "Jan 2025 – Nov 2025",
     responsibilities: [
       "Developed and maintained scalable RESTful APIs using Laravel (PHP)",
       "Applied clean architecture principles for performance and maintainability",

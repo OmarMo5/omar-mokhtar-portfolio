@@ -6,7 +6,7 @@ import profilePhoto from "@/assets/profile-photo.png";
 const roles = [
   "Software Developer",
   "Backend Engineer",
-  "React Specialist",
+  "PHP/Laravel Specialist",
   "AI Enthusiast",
 ];
 
@@ -133,7 +133,7 @@ const HeroSection = () => {
                 Get In Touch
               </button>
               <a
-                href="https://drive.google.com/file/d/13mCw1gn1S8EzgQfYYz390Mkn3M4FT9O0/view?usp=sharing"
+                href="https://drive.google.com/file/d/1iAv7jwqZAXHIOQd2sq4mZjSmdgG3h8Vk/view?usp=sharing"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 px-4 sm:px-6 py-2.5 sm:py-3 rounded-lg bg-secondary text-secondary-foreground font-medium text-xs sm:text-sm transition-all hover:shadow-lg hover:shadow-primary/25 hover:scale-105 active:scale-95"

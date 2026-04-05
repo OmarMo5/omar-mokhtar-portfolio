@@ -22,7 +22,7 @@ const certifications: Certification[] = [
     organization: "365 Data Science",
     logo: logo365ds,
     description: "Fulfilled all the requirements of fundamentals in Python language programming.",
-    certificateFile: "/certificates/Certificate Python.pdf",
+    certificateFile: "https://drive.google.com/file/d/1w1sTSBpkxI2Mt3Gmea2w5o3LF4pQ8xsq/view?usp=sharing",
     actionLabel: "View Certificate",
   },
   {
@@ -30,7 +30,7 @@ const certifications: Certification[] = [
     organization: "Udacity",
     logo: logoUdacity,
     issued: "Feb 2023",
-    certificateFile: "/certificates/Certificate Udacity_Web Professional.pdf",
+    certificateFile: "https://drive.google.com/file/d/1Sh65aq72mEmX6aLh1tD9Js5yhT2lpPCq/view?usp=sharing",
     actionLabel: "View Certificate",
   },
   {
@@ -38,7 +38,7 @@ const certifications: Certification[] = [
     organization: "Country Manager Microsoft Egypt & Ministry of Youth and Sports Egypt",
     logo: logoMicrosoft,
     issued: "Sep 2021",
-    credentialUrl: "#",
+    credentialUrl: "https://drive.google.com/file/d/1r4a6RssvOVaWsUZwRRS6yFPnecZTQ389/view?usp=sharing",
     actionLabel: "Show Credential",
   },
   {
@@ -46,14 +46,14 @@ const certifications: Certification[] = [
     organization: "Udacity",
     logo: logoUdacity,
     issued: "Sep 2021",
-    certificateFile: "/certificates/Certificate Udacity_Data Analysis.pdf",
+    certificateFile: "https://drive.google.com/file/d/1mPtdA4jHq0gvyl1TXo8YClekRPHlpQqL/view?usp=sharing",
     actionLabel: "View Certificate",
   },
   {
     title: "Web Development Challenger Track",
     organization: "Udacity",
     logo: logoUdacity,
-    credentialUrl: "#",
+    credentialUrl: "https://drive.google.com/file/d/1cdEX7Bh6rK3AK2YwT0e8pGPDo_0qcDxb/view?usp=sharing",
     actionLabel: "Show Credential",
   },
 ];
