@@ -2,24 +2,32 @@ import ScrollReveal from "./ScrollReveal";
 
 const skillCategories = [
   {
-    title: "Frontend",
-    skills: ["HTML", "CSS", "JavaScript", "React.js", "Redux", "React Hooks", "Bootstrap", "Material UI"],
+    title: "Programming Languages",
+    skills: ["C", "Java", "Python"],
   },
   {
     title: "Backend",
-    skills: ["PHP", "Laravel", "MySQL", "SQL Server"],
+    skills: ["PHP", "Laravel", "Livewire", "Filament", "Redis", "WordPress"],
   },
   {
-    title: "Programming",
-    skills: ["Python", "Java", "C"],
+    title: "Frontend",
+    skills: ["HTML", "CSS", "Bootstrap", "Material UI", "ShadCN UI", "JavaScript", "TypeScript", "jQuery", "React.js", "Hooks", "Redux", "Context API", "Toolkit", "Next.js"],
   },
   {
-    title: "AI & Machine Learning",
-    skills: ["TensorFlow", "Keras", "PyTorch"],
+    title: "Database",
+    skills: ["MySQL", "SQL Server", "Oracle"],
+  },
+  {
+    title: "Concepts",
+    skills: ["Data Structures", "Databases", "OOP & SOLID Principles", "Clean Code", "Design Patterns"],
   },
   {
     title: "Tools",
-    skills: ["Git", "GitHub", "WebSocket", "Socket.IO"],
+    skills: ["Git & GitHub", "n8n Automation", "Docker"],
+  },
+  {
+    title: "Soft Skills",
+    skills: ["Problem Solving", "Communication", "Teamwork & Collaboration", "Adaptability"],
   },
 ];
 
@@ -37,16 +45,16 @@ const SkillsSection = () => {
           <p className="section-subheading">Technologies I work with</p>
         </ScrollReveal>
 
-        <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6">
+        <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-5">
           {skillCategories.map((category, catIndex) => (
-            <ScrollReveal key={category.title} delay={catIndex * 0.1}>
-              <div className="card-glass p-4 sm:p-6 h-full transition-all duration-300 hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5">
-                <h3 className="font-heading text-sm font-semibold text-primary mb-4 tracking-wider uppercase">
+            <ScrollReveal key={category.title} delay={catIndex * 0.08}>
+              <div className="card-glass p-4 sm:p-5 h-full transition-all duration-300 hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5">
+                <h3 className="font-heading text-xs sm:text-sm font-semibold text-primary mb-3 tracking-wider uppercase">
                   {category.title}
                 </h3>
-                <div className="flex flex-wrap gap-2">
+                <div className="flex flex-wrap gap-1.5 sm:gap-2">
                   {category.skills.map((skill) => (
-                    <span key={skill} className="skill-badge">
+                    <span key={skill} className="skill-badge text-xs sm:text-sm">
                       {skill}
                     </span>
                   ))}

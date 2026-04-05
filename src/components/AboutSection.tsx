@@ -1,27 +1,57 @@
 import { useState, useRef } from "react";
 import ScrollReveal from "./ScrollReveal";
-import { GraduationCap, Briefcase, User, ChevronDown } from "lucide-react";
+import { GraduationCap, Briefcase, User, ChevronDown, MapPin, Calendar, ChevronRight } from "lucide-react";
 
 const experiences = [
   {
-    role: "Front-End Developer",
-    company: "Momentum Solutions",
-    type: "Full-time",
+    role: "Back-End Developer",
+    company: "AL-Salam ASC",
+    types: ["Full-Time (Nov 2025 – Present)", "Part-Time (Apr 2025 – Nov 2025)"],
+    location: "",
+    responsibilities: [
+      "Improved website development, design, and SEO performance",
+      "Enhanced and optimized websites using WordPress",
+      "Worked on custom WordPress themes and plugins",
+      "Built scalable backend systems using Laravel",
+      "Implemented authentication, authorization, and database management",
+      "Developed and improved store websites using JavaScript and CSS",
+    ],
+    technologies: ["HTML", "CSS", "Bootstrap", "JavaScript", "TypeScript", "React.js", "WordPress", "PHP", "Laravel", "MySQL"],
   },
   {
     role: "Web Developer",
-    company: "AL-Salam ASC",
-    type: "Part-time",
+    company: "Momentum Solutions Co.",
+    types: ["Hybrid"],
+    location: "Cairo, Egypt",
+    duration: "Apr 2025 – Present",
+    responsibilities: [
+      "Developed and maintained scalable RESTful APIs using Laravel (PHP)",
+      "Applied clean architecture principles for performance and maintainability",
+      "Built backend systems including authentication, authorization, and real-time features (WebSockets)",
+      "Optimized database queries and backend logic",
+      "Collaborated with frontend teams to integrate APIs with React applications",
+      "Developed and improved multiple websites using modern frontend technologies",
+      "Applied UI/UX best practices for better user experience",
+    ],
+    technologies: ["HTML", "CSS", "Bootstrap", "JavaScript", "TypeScript", "React.js", "Redux", "Hooks", "PHP", "Laravel", "MySQL"],
   },
   {
-    role: "Intern",
+    role: "Intern – Back-End Developer",
     company: "Advanced Computer Technology (ACT)",
-    type: "Internship",
+    types: ["Internship"],
+    location: "Smart Village",
+    duration: "Aug 2022 – Sep 2022",
+    responsibilities: [
+      "Worked on a real internal company system to manage employee data",
+      "Built and maintained multiple parts of the web application",
+    ],
+    technologies: ["HTML", "CSS", "Bootstrap", "JavaScript", "PHP", "SQL Server"],
   },
 ];
 
 const AboutSection = () => {
   const [expanded, setExpanded] = useState(false);
+  const [expandedExp, setExpandedExp] = useState<number | null>(null);
   const contentRef = useRef<HTMLDivElement>(null);
 
   return (
@@ -50,7 +80,6 @@ const AboutSection = () => {
                     I am <span className="text-foreground font-medium">Omar Mokhtar Mohamed</span>, a Software Engineer specialized in Back-End development, with solid hands-on experience in Front-End technologies. I enjoy building scalable, efficient, and high-quality web applications, and I'm always focused on writing clean, maintainable code that follows modern engineering standards.
                   </p>
 
-                  {/* Collapsible content */}
                   <div
                     ref={contentRef}
                     className="overflow-hidden transition-all duration-500 ease-in-out"
@@ -73,7 +102,6 @@ const AboutSection = () => {
                     </p>
                   </div>
 
-                  {/* Read More / Less button */}
                   <button
                     onClick={() => setExpanded(!expanded)}
                     className="inline-flex items-center gap-1.5 mt-3 text-sm font-medium text-primary hover:text-primary/80 transition-colors duration-200 group"
@@ -105,7 +133,7 @@ const AboutSection = () => {
             </div>
           </ScrollReveal>
 
-          {/* Experience */}
+          {/* Experience Timeline */}
           <ScrollReveal delay={0.2} direction="right">
             <div className="flex items-start gap-3">
               <Briefcase className="text-primary mt-1 shrink-0" size={20} />
@@ -113,19 +141,81 @@ const AboutSection = () => {
                 <h3 className="font-heading text-lg font-semibold text-foreground mb-4">
                   Experience
                 </h3>
-                <div className="space-y-4">
-                  {experiences.map((exp, index) => (
-                    <div
-                      key={index}
-                      className="card-glass p-4 transition-all duration-300 hover:border-primary/30"
-                    >
-                      <p className="text-foreground font-medium">{exp.role}</p>
-                      <p className="text-primary text-sm font-heading">{exp.company}</p>
-                      <span className="inline-block mt-2 text-xs px-2 py-0.5 rounded-full bg-primary/10 text-primary border border-primary/20">
-                        {exp.type}
-                      </span>
-                    </div>
-                  ))}
+                <div className="relative space-y-0">
+                  {/* Timeline line */}
+                  <div className="absolute left-[7px] top-2 bottom-2 w-px bg-border" />
+
+                  {experiences.map((exp, index) => {
+                    const isOpen = expandedExp === index;
+                    return (
+                      <div key={index} className="relative pl-7 pb-5 last:pb-0">
+                        {/* Timeline dot */}
+                        <div className="absolute left-0 top-1.5 w-[15px] h-[15px] rounded-full border-2 border-primary bg-background z-10" />
+
+                        <button
+                          onClick={() => setExpandedExp(isOpen ? null : index)}
+                          className="w-full text-left card-glass p-4 transition-all duration-300 hover:border-primary/30 group"
+                        >
+                          <div className="flex items-start justify-between gap-2">
+                            <div className="min-w-0">
+                              <p className="text-foreground font-medium text-sm sm:text-base">{exp.role}</p>
+                              <p className="text-primary text-sm font-heading">{exp.company}</p>
+                              <div className="flex flex-wrap items-center gap-2 mt-1.5">
+                                {exp.types.map((t) => (
+                                  <span key={t} className="text-xs px-2 py-0.5 rounded-full bg-primary/10 text-primary border border-primary/20">
+                                    {t}
+                                  </span>
+                                ))}
+                              </div>
+                              <div className="flex flex-wrap items-center gap-3 mt-1.5 text-xs text-muted-foreground">
+                                {exp.location && (
+                                  <span className="inline-flex items-center gap-1">
+                                    <MapPin size={11} /> {exp.location}
+                                  </span>
+                                )}
+                                {exp.duration && (
+                                  <span className="inline-flex items-center gap-1">
+                                    <Calendar size={11} /> {exp.duration}
+                                  </span>
+                                )}
+                              </div>
+                            </div>
+                            <ChevronRight
+                              size={16}
+                              className={`text-muted-foreground shrink-0 mt-1 transition-transform duration-300 ${isOpen ? "rotate-90" : ""}`}
+                            />
+                          </div>
+
+                          {/* Expandable details */}
+                          <div
+                            className="overflow-hidden transition-all duration-400 ease-in-out"
+                            style={{
+                              maxHeight: isOpen ? "600px" : "0px",
+                              opacity: isOpen ? 1 : 0,
+                            }}
+                          >
+                            <div className="mt-3 pt-3 border-t border-border">
+                              <ul className="space-y-1.5 mb-3">
+                                {exp.responsibilities.map((r, i) => (
+                                  <li key={i} className="text-muted-foreground text-xs leading-relaxed flex items-start gap-2">
+                                    <span className="text-primary mt-0.5 shrink-0">▹</span>
+                                    {r}
+                                  </li>
+                                ))}
+                              </ul>
+                              <div className="flex flex-wrap gap-1.5">
+                                {exp.technologies.map((tech) => (
+                                  <span key={tech} className="skill-badge text-xs !px-2 !py-1">
+                                    {tech}
+                                  </span>
+                                ))}
+                              </div>
+                            </div>
+                          </div>
+                        </button>
+                      </div>
+                    );
+                  })}
                 </div>
               </div>
             </div>
