@@ -10,7 +10,7 @@ const Footer = () => {
               &lt;Omar Mokhtar /&gt;
             </p>
             <p className="text-muted-foreground text-sm flex items-center gap-1">
-              Built with <Heart size={14} className="text-primary" /> using React
+              Built with Omar Mokhtar
             </p>
           </div>
 
