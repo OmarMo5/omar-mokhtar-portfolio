@@ -985,9 +985,53 @@ const Projects = () => {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-100px" }}
         transition={{ duration: 0.5 }}
+        className="text-center"
       >
-        <p className="section-label">Featured Work</p>
-        <h2 className="section-title">Projects That Deliver Results</h2>
+        {/* Improved Section Label with accent bar */}
+        <div className="flex items-center justify-center gap-3 mb-4">
+          {/* <div className="h-px w-8 bg-accent/50"></div>
+          <p className="section-label text-accent font-medium tracking-wider uppercase text-sm">
+            
+          </p>
+          <div className="h-px w-8 bg-accent/50"></div> */}
+        </div>
+        
+        {/* Main Title with Gradient and Animation */}
+        <h2 className="font-display text-3xl md:text-4xl lg:text-5xl font-bold mb-4">
+          <span className="bg-gradient-to-r from-white via-accent to-white bg-clip-text text-transparent bg-size-200 animate-gradient">
+            Production-Ready
+          </span>
+          <br />
+          <span className="text-foreground">Digital Solutions</span>
+        </h2>
+        
+        {/* Subtitle with stats */}
+        <div className="flex flex-wrap items-center justify-center gap-6 mt-4">
+          <div className="flex items-center gap-2">
+            <div className="w-2 h-2 rounded-full bg-accent animate-pulse"></div>
+            <span className="text-muted-foreground text-sm">
+              {projects.length}+ Projects Delivered
+            </span>
+          </div>
+          <div className="flex items-center gap-2">
+            <div className="w-2 h-2 rounded-full bg-accent/60"></div>
+            <span className="text-muted-foreground text-sm">
+              {projects.filter(p => p.hasVideo).length} Video Demos
+            </span>
+          </div>
+          <div className="flex items-center gap-2">
+            <div className="w-2 h-2 rounded-full bg-accent/30"></div>
+            <span className="text-muted-foreground text-sm">
+              Real-World Applications
+            </span>
+          </div>
+        </div>
+        
+        {/* Description text */}
+        <p className="text-muted-foreground max-w-2xl mx-auto mt-6">
+          From concept to deployment — exploring real-world applications that solve complex problems
+          with modern technologies and best practices.
+        </p>
       </motion.div>
 
       {/* Featured Projects */}
@@ -1021,7 +1065,19 @@ const Projects = () => {
         transition={{ delay: 0.2 }}
         className="mt-16"
       >
-        <h3 className="mb-8 font-display text-lg font-semibold text-muted-foreground">More Projects ({carouselProjects.length})</h3>
+        <div className="flex items-center justify-between mb-8">
+          <div>
+            <h3 className="font-display text-xl font-semibold text-foreground">
+              More Projects
+            </h3>
+            <p className="text-sm text-muted-foreground mt-1">
+              Complete portfolio of {carouselProjects.length} additional projects
+            </p>
+          </div>
+          <div className="text-sm text-accent/70">
+            {carouselProjects.length} projects
+          </div>
+        </div>
 
         <div className="relative">
           <button
