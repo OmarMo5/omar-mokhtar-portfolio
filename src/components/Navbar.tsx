@@ -33,10 +33,20 @@ const Navbar = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const handleClick = (href: string) => {
+  const handleClick = (e: React.MouseEvent, href: string) => {
+    e.preventDefault();
+    e.stopPropagation();
     setIsMobileOpen(false);
-    const el = document.querySelector(href);
-    el?.scrollIntoView({ behavior: "smooth" });
+    
+    // Small delay to let mobile menu close before scrolling
+    setTimeout(() => {
+      const el = document.querySelector(href);
+      if (el) {
+        const navHeight = 64;
+        const top = el.getBoundingClientRect().top + window.scrollY - navHeight;
+        window.scrollTo({ top, behavior: "smooth" });
+      }
+    }, 100);
   };
 
   return (
