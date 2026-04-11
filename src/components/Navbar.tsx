@@ -33,10 +33,20 @@ const Navbar = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const handleClick = (href: string) => {
+  const handleClick = (e: React.MouseEvent, href: string) => {
+    e.preventDefault();
+    e.stopPropagation();
     setIsMobileOpen(false);
-    const el = document.querySelector(href);
-    el?.scrollIntoView({ behavior: "smooth" });
+    
+    // Small delay to let mobile menu close before scrolling
+    setTimeout(() => {
+      const el = document.querySelector(href);
+      if (el) {
+        const navHeight = 64;
+        const top = el.getBoundingClientRect().top + window.scrollY - navHeight;
+        window.scrollTo({ top, behavior: "smooth" });
+      }
+    }, 100);
   };
 
   return (
@@ -52,7 +62,7 @@ const Navbar = () => {
     >
       <div className="section-container flex items-center justify-between h-16">
         <button
-          onClick={() => handleClick("#home")}
+          onClick={(e) => handleClick(e, "#home")}
           className="font-heading text-lg font-bold text-primary tracking-tight"
         >
           &lt;Omar /&gt;
@@ -63,7 +73,7 @@ const Navbar = () => {
           {navItems.map((item) => (
             <button
               key={item.href}
-              onClick={() => handleClick(item.href)}
+              onClick={(e) => handleClick(e, item.href)}
               className={`nav-link text-sm font-medium pb-1 ${
                 activeSection === item.href.slice(1) ? "active text-primary" : ""
               }`}
@@ -96,8 +106,8 @@ const Navbar = () => {
               {navItems.map((item) => (
                 <button
                   key={item.href}
-                  onClick={() => handleClick(item.href)}
-                  className={`text-left text-sm font-medium transition-colors ${
+                  onClick={(e) => handleClick(e, item.href)}
+                  className={`text-left text-sm font-medium py-2 transition-colors ${
                     activeSection === item.href.slice(1)
                       ? "text-primary"
                       : "text-muted-foreground hover:text-foreground"
