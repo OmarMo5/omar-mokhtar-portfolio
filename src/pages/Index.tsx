@@ -7,7 +7,6 @@ import SkillsSection from "@/components/SkillsSection";
 import ProjectsSection from "@/components/ProjectsSection";
 import Projects from "@/components/Projects";
 import AwardSection from "@/components/Awards";
-import Achievements from "@/components/Achievements";
 import CertificationsSection from "@/components/CertificationsSection";
 import ContactSection from "@/components/ContactSection";
 import Footer from "@/components/Footer";
@@ -37,7 +36,6 @@ const Index = () => {
           <SkillsSection />
           {/* <ProjectsSection /> */}
           <Projects />
-          <Achievements />
           <AwardSection />
           <CertificationsSection />
           <ContactSection />
