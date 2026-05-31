@@ -31,28 +31,48 @@ const ContactSection = () => {
 
     setIsSending(true);
     try {
-      await emailjs.send(
+      const name = formData.name.trim();
+      const email = formData.email.trim();
+      const subject = formData.subject.trim();
+      const message = formData.message.trim();
+
+      const templateParams: Record<string, string> = {
+        // common variants so it matches whatever variables your template uses
+        name,
+        from_name: name,
+        user_name: name,
+        email,
+        from_email: email,
+        user_email: email,
+        reply_to: email,
+        subject,
+        title: subject,
+        message,
+        user_message: message,
+        date: new Date().toLocaleString(),
+        time: new Date().toLocaleString(),
+        to_email: EMAILJS_CONFIG.TO_EMAIL,
+      };
+
+      const response = await emailjs.send(
         EMAILJS_CONFIG.SERVICE_ID,
         EMAILJS_CONFIG.TEMPLATE_ID,
-        {
-          name: formData.name.trim(),
-          email: formData.email.trim(),
-          subject: formData.subject.trim(),
-          message: formData.message.trim(),
-          date: new Date().toLocaleString(),
-          to_email: EMAILJS_CONFIG.TO_EMAIL,
-        },
+        templateParams,
         { publicKey: EMAILJS_CONFIG.PUBLIC_KEY }
       );
 
+      console.log("EmailJS success:", response);
       toast({ title: "Message sent successfully!", description: "Thanks for reaching out — I'll get back to you soon." });
       setFormData({ name: "", email: "", subject: "", message: "" });
       setErrors({});
-    } catch (err) {
+    } catch (err: any) {
       console.error("EmailJS error:", err);
+      const detail =
+        (err && (err.text || err.message)) ||
+        (typeof err === "string" ? err : "Something went wrong. Please try again.");
       toast({
         title: "Failed to send message",
-        description: "Something went wrong. Please try again or email me directly.",
+        description: String(detail),
         variant: "destructive",
       });
     } finally {
