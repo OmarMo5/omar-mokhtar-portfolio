@@ -1,11 +1,14 @@
 import { useState } from "react";
-import { Mail, Phone, MapPin, Send } from "lucide-react";
+import { Mail, Phone, MapPin, Send, Loader2 } from "lucide-react";
+import emailjs from "@emailjs/browser";
 import ScrollReveal from "./ScrollReveal";
 import { useToast } from "@/hooks/use-toast";
+import { EMAILJS_CONFIG } from "@/config/emailjs";
 
 const ContactSection = () => {
   const [formData, setFormData] = useState({ name: "", email: "", subject: "", message: "" });
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const [isSending, setIsSending] = useState(false);
   const { toast } = useToast();
 
   const validate = () => {
@@ -19,22 +22,62 @@ const ContactSection = () => {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!validate()) {
       toast({ title: "Please fix the errors", description: "All fields are required.", variant: "destructive" });
       return;
     }
 
-    const subject = encodeURIComponent(`Portfolio Contact – ${formData.name.trim()}`);
-    const body = encodeURIComponent(
-      `Name: ${formData.name.trim()}\n\nEmail: ${formData.email.trim()}\n\nSubject: ${formData.subject.trim()}\n\nMessage:\n${formData.message.trim()}`
-    );
-    window.location.href = `mailto:omarmo5tar12@gmail.com?subject=${subject}&body=${body}`;
+    setIsSending(true);
+    try {
+      const name = formData.name.trim();
+      const email = formData.email.trim();
+      const subject = formData.subject.trim();
+      const message = formData.message.trim();
 
-    toast({ title: "Email client opened!", description: "Complete sending in your email app." });
-    setFormData({ name: "", email: "", subject: "", message: "" });
-    setErrors({});
+      const templateParams: Record<string, string> = {
+        // common variants so it matches whatever variables your template uses
+        name,
+        from_name: name,
+        user_name: name,
+        email,
+        from_email: email,
+        user_email: email,
+        reply_to: email,
+        subject,
+        title: subject,
+        message,
+        user_message: message,
+        date: new Date().toLocaleString(),
+        time: new Date().toLocaleString(),
+        to_email: EMAILJS_CONFIG.TO_EMAIL,
+      };
+
+      const response = await emailjs.send(
+        EMAILJS_CONFIG.SERVICE_ID,
+        EMAILJS_CONFIG.TEMPLATE_ID,
+        templateParams,
+        { publicKey: EMAILJS_CONFIG.PUBLIC_KEY }
+      );
+
+      console.log("EmailJS success:", response);
+      toast({ title: "Message sent successfully!", description: "Thanks for reaching out — I'll get back to you soon." });
+      setFormData({ name: "", email: "", subject: "", message: "" });
+      setErrors({});
+    } catch (err: any) {
+      console.error("EmailJS error:", err);
+      const detail =
+        (err && (err.text || err.message)) ||
+        (typeof err === "string" ? err : "Something went wrong. Please try again.");
+      toast({
+        title: "Failed to send message",
+        description: String(detail),
+        variant: "destructive",
+      });
+    } finally {
+      setIsSending(false);
+    }
   };
 
   return (
@@ -59,13 +102,13 @@ const ContactSection = () => {
               </p>
 
               <div className="space-y-4">
-                <a href="mailto:omarmo5tar12@gmail.com" className="flex items-center gap-4 group">
+                <a href="mailto:omarmokhtar20015@gmail.com" className="flex items-center gap-4 group">
                   <div className="w-12 h-12 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
                     <Mail size={20} className="text-primary" />
                   </div>
                   <div>
                     <p className="text-xs text-muted-foreground uppercase tracking-wider">Email</p>
-                    <p className="text-foreground group-hover:text-primary transition-colors">omarmo5tar12@gmail.com</p>
+                    <p className="text-foreground group-hover:text-primary transition-colors">omarmokhtar20015@gmail.com</p>
                   </div>
                 </a>
 
@@ -140,10 +183,20 @@ const ContactSection = () => {
 
               <button
                 type="submit"
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-primary text-primary-foreground font-medium text-sm transition-all hover:shadow-lg hover:shadow-primary/25 hover:scale-105 active:scale-95"
+                disabled={isSending}
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-primary text-primary-foreground font-medium text-sm transition-all hover:shadow-lg hover:shadow-primary/25 hover:scale-105 active:scale-95 disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:scale-100"
               >
-                <Send size={18} />
-                Send Message
+                {isSending ? (
+                  <>
+                    <Loader2 size={18} className="animate-spin" />
+                    Sending...
+                  </>
+                ) : (
+                  <>
+                    <Send size={18} />
+                    Send Message
+                  </>
+                )}
               </button>
             </form>
           </ScrollReveal>
