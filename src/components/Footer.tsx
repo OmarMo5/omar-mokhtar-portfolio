@@ -1,6 +1,8 @@
-import { Github, Linkedin, Mail, Heart } from "lucide-react";
+import { Github, Linkedin, Mail } from "lucide-react";
+import { useLang } from "@/contexts/LanguageContext";
 
 const Footer = () => {
+  const { t } = useLang();
   return (
     <footer className="py-12 border-t border-border">
       <div className="section-container">
@@ -9,9 +11,7 @@ const Footer = () => {
             <p className="font-heading text-primary text-sm font-bold mb-1">
               &lt;Omar Mokhtar /&gt;
             </p>
-            <p className="text-muted-foreground text-sm flex items-center gap-1">
-              Built with Omar Mokhtar
-            </p>
+            <p className="text-muted-foreground text-sm">{t.footer.builtBy}</p>
           </div>
 
           <div className="flex items-center gap-4">
@@ -43,7 +43,7 @@ const Footer = () => {
           </div>
 
           <p className="text-muted-foreground text-xs">
-            © {new Date().getFullYear()} Omar Mokhtar. All rights reserved.
+            © {new Date().getFullYear()} Omar Mokhtar. {t.footer.rights}
           </p>
         </div>
       </div>

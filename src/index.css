@@ -1,10 +1,11 @@
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&family=Cairo:wght@300;400;500;600;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
-
 @layer base {
+  /* ── Dark mode (default) ── */
   :root {
     --background: 222 47% 6%;
     --foreground: 210 40% 92%;
@@ -45,12 +46,60 @@
     --sidebar-border: 222 30% 18%;
     --sidebar-ring: 174 72% 56%;
 
-    /* Custom tokens */
     --gradient-primary: linear-gradient(135deg, hsl(174, 72%, 56%), hsl(199, 89%, 48%));
     --gradient-hero: linear-gradient(160deg, hsl(222, 47%, 6%) 0%, hsl(222, 47%, 10%) 50%, hsl(222, 40%, 8%) 100%);
     --gradient-card: linear-gradient(145deg, hsl(222, 44%, 10%), hsl(222, 44%, 7%));
     --shadow-glow: 0 0 30px -5px hsl(174, 72%, 56%, 0.15);
     --shadow-card: 0 2px 8px -2px hsl(0, 0%, 0%, 0.2), inset 0 1px 0 0 hsl(222, 30%, 20%, 0.3);
+
+    --font-heading: 'JetBrains Mono', monospace;
+    --font-body: 'Inter', sans-serif;
+  }
+
+  /* ── Light mode ── */
+  :root.light {
+    --background: 210 30% 98%;
+    --foreground: 222 40% 12%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 222 40% 12%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 222 40% 12%;
+
+    --primary: 174 65% 38%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 210 20% 94%;
+    --secondary-foreground: 222 40% 20%;
+
+    --muted: 210 20% 95%;
+    --muted-foreground: 215 18% 42%;
+
+    --accent: 174 65% 38%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 214 20% 88%;
+    --input: 214 20% 88%;
+    --ring: 174 65% 38%;
+
+    --sidebar-background: 210 25% 96%;
+    --sidebar-foreground: 222 40% 12%;
+    --sidebar-primary: 174 65% 38%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 210 20% 92%;
+    --sidebar-accent-foreground: 222 40% 12%;
+    --sidebar-border: 214 20% 88%;
+    --sidebar-ring: 174 65% 38%;
+
+    --gradient-primary: linear-gradient(135deg, hsl(174, 65%, 38%), hsl(199, 80%, 42%));
+    --gradient-hero: linear-gradient(160deg, hsl(210, 30%, 98%) 0%, hsl(210, 25%, 95%) 50%, hsl(210, 30%, 97%) 100%);
+    --gradient-card: linear-gradient(145deg, hsl(0, 0%, 100%), hsl(210, 20%, 98%));
+    --shadow-glow: 0 0 30px -5px hsl(174, 65%, 38%, 0.15);
+    --shadow-card: 0 1px 4px -1px hsl(0, 0%, 0%, 0.08), 0 0 0 1px hsl(214, 20%, 90%);
 
     --font-heading: 'JetBrains Mono', monospace;
     --font-body: 'Inter', sans-serif;
@@ -67,6 +116,18 @@
     font-family: var(--font-body);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Arabic font override */
+  [dir="rtl"] body,
+  [dir="rtl"] p,
+  [dir="rtl"] span,
+  [dir="rtl"] li,
+  [dir="rtl"] label,
+  [dir="rtl"] input,
+  [dir="rtl"] textarea,
+  [dir="rtl"] button:not(.font-heading) {
+    font-family: 'Cairo', 'Inter', sans-serif;
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -102,7 +163,7 @@
 
   .card-glass {
     background: var(--gradient-card);
-    border: 1px solid hsl(222, 30%, 18%);
+    border: 1px solid hsl(var(--border));
     box-shadow: var(--shadow-card);
     @apply rounded-xl;
   }
@@ -177,6 +238,102 @@
   50% { border-color: hsl(174, 72%, 56%); }
 }
 
+/* ── Blob / orb animations ── */
+@keyframes blob-1 {
+  0%, 100% { transform: translate(0px, 0px) scale(1); }
+  33%       { transform: translate(60px, -80px) scale(1.15); }
+  66%       { transform: translate(-40px, 40px) scale(0.9); }
+}
+@keyframes blob-2 {
+  0%, 100% { transform: translate(0px, 0px) scale(1); }
+  33%       { transform: translate(-70px, 50px) scale(1.1); }
+  66%       { transform: translate(50px, -60px) scale(0.95); }
+}
+@keyframes blob-3 {
+  0%, 100% { transform: translate(0px, 0px) scale(1); }
+  50%       { transform: translate(40px, 30px) scale(1.05); }
+}
+
+.animate-blob-1 { animation: blob-1 9s ease-in-out infinite; }
+.animate-blob-2 { animation: blob-2 12s ease-in-out infinite; }
+.animate-blob-3 { animation: blob-3 15s ease-in-out infinite; }
+
+/* Blobs are subtle in dark mode, more visible in light mode */
+.hero-blob { opacity: 0.12; }
+:root.light .hero-blob { opacity: 0.22; }
+
+/* ── Card shimmer on hover ── */
+@keyframes card-shine {
+  0%   { left: -120%; }
+  60%, 100% { left: 140%; }
+}
+
+.card-shimmer {
+  position: relative;
+  overflow: hidden;
+}
+
+.card-shimmer::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -120%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(
+    105deg,
+    transparent 30%,
+    hsl(var(--primary) / 0.09) 50%,
+    transparent 70%
+  );
+  pointer-events: none;
+  transition: none;
+}
+
+:root.light .card-shimmer::after {
+  background: linear-gradient(
+    105deg,
+    transparent 30%,
+    hsl(var(--primary) / 0.14) 50%,
+    transparent 70%
+  );
+}
+
+.card-shimmer:hover::after {
+  animation: card-shine 0.7s ease forwards;
+}
+
+/* ── Animated gradient text (section numbers) ── */
+@keyframes gradient-shift {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.gradient-animated {
+  background: linear-gradient(
+    270deg,
+    hsl(174, 72%, 56%),
+    hsl(199, 89%, 60%),
+    hsl(174, 72%, 70%),
+    hsl(199, 89%, 48%)
+  );
+  background-size: 300% 300%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: gradient-shift 4s ease infinite;
+}
+
+/* ── Floating badge animation ── */
+@keyframes badge-float {
+  0%, 100% { transform: translateY(0px) rotate(-2deg); }
+  50%       { transform: translateY(-8px) rotate(2deg); }
+}
+
+.badge-float { animation: badge-float 4s ease-in-out infinite; }
+.badge-float-delayed { animation: badge-float 4s ease-in-out infinite 2s; }
+
 /* Smooth scrolling */
 html {
   scroll-behavior: smooth;
@@ -189,18 +346,73 @@ body {
 
 /* Custom scrollbar */
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 6px;
 }
 
 ::-webkit-scrollbar-track {
-  background: hsl(222, 47%, 6%);
+  background: hsl(var(--background));
 }
 
 ::-webkit-scrollbar-thumb {
-  background: hsl(222, 30%, 22%);
+  background: hsl(var(--border));
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: hsl(174, 72%, 56%, 0.5);
+  background: hsl(var(--primary) / 0.5);
+}
+
+/* ── RTL Overrides ── */
+[dir="rtl"] .nav-link::after {
+  left: auto;
+  right: 0;
+  transform-origin: left;
+}
+[dir="rtl"] .nav-link:hover::after,
+[dir="rtl"] .nav-link.active::after {
+  transform-origin: right;
+}
+
+/* flip section heading decoration line */
+[dir="rtl"] .section-header-line {
+  margin-left: 0;
+  margin-right: 1rem;
+}
+
+/* timeline in about section */
+[dir="rtl"] .timeline-line {
+  left: auto;
+  right: 7px;
+}
+[dir="rtl"] .timeline-item {
+  padding-left: 0;
+  padding-right: 1.75rem;
+}
+[dir="rtl"] .timeline-dot {
+  left: auto;
+  right: 0;
+}
+
+/* quote border flip */
+[dir="rtl"] .quote-border {
+  border-left: none;
+  border-right: 2px solid hsl(var(--primary));
+  padding-left: 0;
+  padding-right: 1rem;
+}
+
+/* code editor sidebar active border */
+[dir="rtl"] .editor-sidebar-item-active {
+  border-left: none !important;
+  border-right: 2px solid hsl(var(--primary)) !important;
+}
+[dir="rtl"] .editor-sidebar-item {
+  border-left: none !important;
+  border-right: 2px solid transparent !important;
+}
+
+/* skills code indent */
+[dir="rtl"] .skill-indent {
+  margin-left: 0;
+  margin-right: 1rem;
 }

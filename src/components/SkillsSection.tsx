@@ -1,76 +1,50 @@
-import { useState } from "react";
-import { Code, Server, Layout, Database, Lightbulb, Wrench, Users } from "lucide-react";
+import { useState, useEffect } from "react";
+import { Code, Server, Layout, Database, Lightbulb, Wrench, Users, Globe, Cpu, Terminal, LucideIcon } from "lucide-react";
 import ScrollReveal from "./ScrollReveal";
+import { useLang } from "@/contexts/LanguageContext";
 
-const skillCategories = [
-  {
-    key: "languages",
-    label: "languages",
-    icon: Code,
-    color: "text-[#e06c75]",
-    bgColor: "bg-[#e06c75]/10",
-    borderColor: "border-[#e06c75]/30",
-    skills: ["C", "Java", "Python"],
-  },
-  {
-    key: "backend",
-    label: "backend",
-    icon: Server,
-    color: "text-[#61afef]",
-    bgColor: "bg-[#61afef]/10",
-    borderColor: "border-[#61afef]/30",
-    skills: ["PHP", "Laravel", "Livewire", "Filament", "Redis", "WordPress"],
-  },
-  {
-    key: "frontend",
-    label: "frontend",
-    icon: Layout,
-    color: "text-[#98c379]",
-    bgColor: "bg-[#98c379]/10",
-    borderColor: "border-[#98c379]/30",
-    skills: ["HTML", "CSS", "Bootstrap", "Material UI", "ShadCN UI", "JavaScript", "TypeScript", "jQuery", "React.js", "Hooks", "Redux", "Context API", "Toolkit", "Next.js"],
-  },
-  {
-    key: "database",
-    label: "database",
-    icon: Database,
-    color: "text-[#e5c07b]",
-    bgColor: "bg-[#e5c07b]/10",
-    borderColor: "border-[#e5c07b]/30",
-    skills: ["MySQL", "SQL Server", "Oracle"],
-  },
-  {
-    key: "concepts",
-    label: "concepts",
-    icon: Lightbulb,
-    color: "text-[#c678dd]",
-    bgColor: "bg-[#c678dd]/10",
-    borderColor: "border-[#c678dd]/30",
-    skills: ["Data Structures", "Databases", "OOP & SOLID Principles", "Clean Code", "Design Patterns"],
-  },
-  {
-    key: "tools",
-    label: "tools",
-    icon: Wrench,
-    color: "text-[#56b6c2]",
-    bgColor: "bg-[#56b6c2]/10",
-    borderColor: "border-[#56b6c2]/30",
-    skills: ["Git & GitHub", "n8n Automation", "Docker"],
-  },
-  {
-    key: "softSkills",
-    label: "softSkills",
-    icon: Users,
-    color: "text-primary",
-    bgColor: "bg-primary/10",
-    borderColor: "border-primary/30",
-    skills: ["Problem Solving", "Communication", "Teamwork & Collaboration", "Adaptability"],
-  },
+const iconMap: Record<string, LucideIcon> = {
+  Code, Server, Layout, Database, Lightbulb, Wrench, Users, Globe, Cpu, Terminal,
+};
+
+interface SkillCategory {
+  key: string;
+  label: string;
+  icon: string;
+  color: string;
+  bg_color: string;
+  border_color: string;
+  skills: string[];
+}
+
+const fallbackCategories: SkillCategory[] = [
+  { key: "languages", label: "languages", icon: "Code", color: "text-[#e06c75]", bg_color: "bg-[#e06c75]/10", border_color: "border-[#e06c75]/30", skills: ["C", "Java", "Python"] },
+  { key: "backend", label: "backend", icon: "Server", color: "text-[#61afef]", bg_color: "bg-[#61afef]/10", border_color: "border-[#61afef]/30", skills: ["PHP", "Laravel", "Livewire", "Filament", "Redis", "WordPress"] },
+  { key: "frontend", label: "frontend", icon: "Layout", color: "text-[#98c379]", bg_color: "bg-[#98c379]/10", border_color: "border-[#98c379]/30", skills: ["HTML", "CSS", "Bootstrap", "Material UI", "ShadCN UI", "JavaScript", "TypeScript", "jQuery", "React.js", "Hooks", "Redux", "Context API", "Toolkit", "Next.js"] },
+  { key: "database", label: "database", icon: "Database", color: "text-[#e5c07b]", bg_color: "bg-[#e5c07b]/10", border_color: "border-[#e5c07b]/30", skills: ["MySQL", "SQL Server", "Oracle"] },
+  { key: "concepts", label: "concepts", icon: "Lightbulb", color: "text-[#c678dd]", bg_color: "bg-[#c678dd]/10", border_color: "border-[#c678dd]/30", skills: ["Data Structures", "Databases", "OOP & SOLID Principles", "Clean Code", "Design Patterns"] },
+  { key: "tools", label: "tools", icon: "Wrench", color: "text-[#56b6c2]", bg_color: "bg-[#56b6c2]/10", border_color: "border-[#56b6c2]/30", skills: ["Git & GitHub", "n8n Automation", "Docker"] },
+  { key: "softSkills", label: "softSkills", icon: "Users", color: "text-primary", bg_color: "bg-primary/10", border_color: "border-primary/30", skills: ["Problem Solving", "Communication", "Teamwork & Collaboration", "Adaptability"] },
 ];
 
+const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:8000/api";
+
 const SkillsSection = () => {
+  const { t } = useLang();
+  const sk = t.skills;
   const [activeTab, setActiveTab] = useState(0);
   const [hoveredSkill, setHoveredSkill] = useState<string | null>(null);
+  const [skillCategories, setSkillCategories] = useState<SkillCategory[]>(fallbackCategories);
+
+  useEffect(() => {
+    fetch(`${API_BASE}/portfolio/skills`)
+      .then((r) => r.ok ? r.json() : null)
+      .then((data) => { if (data && data.length > 0) setSkillCategories(data); })
+      .catch(() => {});
+  }, []);
+
+  const activeCategory = skillCategories[activeTab] ?? skillCategories[0];
+  const maxSkills = Math.max(...skillCategories.map((c) => c.skills.length), 1);
 
   return (
     <section id="skills" className="py-14 sm:py-24 relative">
@@ -78,11 +52,11 @@ const SkillsSection = () => {
       <div className="section-container relative z-10">
         <ScrollReveal>
           <div className="flex items-center gap-3 mb-2">
-            <span className="font-heading text-primary text-sm">02.</span>
-            <h2 className="section-heading">Skills</h2>
-            <div className="hidden sm:block flex-1 h-px bg-border ml-4" />
+            <span className="font-heading text-sm gradient-animated">{sk.num}</span>
+            <h2 className="section-heading">{sk.title}</h2>
+            <div className="hidden sm:block flex-1 h-px bg-border ms-4" />
           </div>
-          <p className="section-subheading">Technologies I work with</p>
+          <p className="section-subheading">{sk.subtitle}</p>
         </ScrollReveal>
 
         {/* Desktop: Code Editor Style */}
@@ -91,13 +65,11 @@ const SkillsSection = () => {
             <div className="rounded-xl overflow-hidden border border-border shadow-2xl shadow-black/40">
               {/* Editor Top Bar */}
               <div className="flex items-center gap-0 bg-[hsl(222,44%,7%)] border-b border-border">
-                {/* Window Controls */}
                 <div className="flex items-center gap-1.5 px-4 py-3 border-r border-border">
                   <div className="w-3 h-3 rounded-full bg-[#ff5f57]" />
                   <div className="w-3 h-3 rounded-full bg-[#ffbd2e]" />
                   <div className="w-3 h-3 rounded-full bg-[#28c840]" />
                 </div>
-                {/* File Tab */}
                 <div className="flex items-center gap-2 px-4 py-3 bg-[hsl(222,44%,9%)] border-r border-border text-xs font-heading text-muted-foreground">
                   <span className="text-[#e5c07b]">const</span>
                   <span className="text-foreground">techStack</span>
@@ -114,19 +86,19 @@ const SkillsSection = () => {
                 {/* Category Sidebar */}
                 <div className="w-56 shrink-0 border-r border-border bg-[hsl(222,44%,7%)] py-3">
                   <p className="text-xs font-heading text-muted-foreground/50 px-4 pb-2 uppercase tracking-widest">
-                    Categories
+                    {sk.categories}
                   </p>
                   {skillCategories.map((cat, index) => {
-                    const Icon = cat.icon;
+                    const Icon = iconMap[cat.icon] ?? Code;
                     const isActive = activeTab === index;
                     return (
                       <button
                         key={cat.key}
                         onClick={() => setActiveTab(index)}
-                        className={`w-full flex items-center gap-2.5 px-4 py-2.5 text-left transition-all duration-200 group ${
+                        className={`w-full flex items-center gap-2.5 px-4 py-2.5 text-start transition-all duration-200 group ${
                           isActive
-                            ? "bg-[hsl(222,44%,11%)] border-l-2 border-primary"
-                            : "border-l-2 border-transparent hover:bg-[hsl(222,44%,10%)] hover:border-l-border"
+                            ? "bg-[hsl(222,44%,11%)] border-s-2 border-primary"
+                            : "border-s-2 border-transparent hover:bg-[hsl(222,44%,10%)] hover:border-s-[hsl(var(--border))]"
                         }`}
                       >
                         <Icon
@@ -154,113 +126,94 @@ const SkillsSection = () => {
 
                 {/* Code Content */}
                 <div className="flex-1 p-6 overflow-auto min-h-[420px]">
-                  {(() => {
-                    const cat = skillCategories[activeTab];
-                    return (
-                      <div className="font-heading text-sm leading-loose">
-                        {/* Line 1 - comment */}
-                        <div className="flex items-start gap-4 mb-1">
-                          <span className="text-muted-foreground/30 text-xs w-5 text-right shrink-0 mt-0.5">1</span>
-                          <span className="text-muted-foreground/50 italic">
-                            {`// ${cat.label} — ${cat.skills.length} technologies`}
-                          </span>
-                        </div>
-                        {/* Line 2 */}
-                        <div className="flex items-start gap-4 mb-1">
-                          <span className="text-muted-foreground/30 text-xs w-5 text-right shrink-0 mt-0.5">2</span>
-                          <div>
-                            <span className="text-[#c678dd]">const </span>
-                            <span className={cat.color}>{cat.key} </span>
-                            <span className="text-muted-foreground">= </span>
-                            <span className="text-foreground">[</span>
-                          </div>
-                        </div>
-                        {/* Skills Lines */}
-                        {cat.skills.map((skill, i) => (
-                          <div
-                            key={skill}
-                            className="flex items-center gap-4 mb-1 group cursor-default"
-                            onMouseEnter={() => setHoveredSkill(skill)}
-                            onMouseLeave={() => setHoveredSkill(null)}
+                  <div className="font-heading text-sm leading-loose">
+                    <div className="flex items-start gap-4 mb-1">
+                      <span className="text-muted-foreground/30 text-xs w-5 text-right shrink-0 mt-0.5">1</span>
+                      <span className="text-muted-foreground/50 italic">
+                        {`// ${activeCategory.label} — ${activeCategory.skills.length} technologies`}
+                      </span>
+                    </div>
+                    <div className="flex items-start gap-4 mb-1">
+                      <span className="text-muted-foreground/30 text-xs w-5 text-right shrink-0 mt-0.5">2</span>
+                      <div>
+                        <span className="text-[#c678dd]">const </span>
+                        <span className={activeCategory.color}>{activeCategory.key} </span>
+                        <span className="text-muted-foreground">= </span>
+                        <span className="text-foreground">[</span>
+                      </div>
+                    </div>
+                    {activeCategory.skills.map((skill, i) => (
+                      <div
+                        key={skill}
+                        className="flex items-center gap-4 mb-1 group cursor-default"
+                        onMouseEnter={() => setHoveredSkill(skill)}
+                        onMouseLeave={() => setHoveredSkill(null)}
+                      >
+                        <span className="text-muted-foreground/30 text-xs w-5 text-right shrink-0">
+                          {i + 3}
+                        </span>
+                        <div
+                          className={`flex items-center gap-1 px-2 py-0.5 rounded transition-all duration-200 ${
+                            hoveredSkill === skill
+                              ? `${activeCategory.bg_color} ${activeCategory.border_color} border`
+                              : ""
+                          }`}
+                        >
+                          <span className="text-muted-foreground/40 ms-4">"</span>
+                          <span
+                            className={`transition-colors duration-200 ${
+                              hoveredSkill === skill ? activeCategory.color : "text-[#98c379]"
+                            }`}
                           >
-                            <span className="text-muted-foreground/30 text-xs w-5 text-right shrink-0">
-                              {i + 3}
-                            </span>
-                            <div
-                              className={`flex items-center gap-1 px-2 py-0.5 rounded transition-all duration-200 ${
-                                hoveredSkill === skill
-                                  ? `${cat.bgColor} ${cat.borderColor} border`
-                                  : ""
-                              }`}
-                            >
-                              <span className="text-muted-foreground/40 ml-4">"</span>
-                              <span
-                                className={`transition-colors duration-200 ${
-                                  hoveredSkill === skill ? cat.color : "text-[#98c379]"
-                                }`}
-                              >
-                                {skill}
-                              </span>
-                              <span className="text-muted-foreground/40">"</span>
-                              {i < cat.skills.length - 1 && (
-                                <span className="text-muted-foreground">,</span>
-                              )}
-                            </div>
-                          </div>
-                        ))}
-                        {/* Closing line */}
-                        <div className="flex items-start gap-4 mb-1">
-                          <span className="text-muted-foreground/30 text-xs w-5 text-right shrink-0 mt-0.5">
-                            {cat.skills.length + 3}
+                            {skill}
                           </span>
-                          <div>
-                            <span className="text-foreground">]</span>
-                            <span className="text-muted-foreground/40 ml-1">as const;</span>
-                          </div>
-                        </div>
-                        {/* Cursor blink */}
-                        <div className="flex items-start gap-4 mt-2">
-                          <span className="text-muted-foreground/30 text-xs w-5 text-right shrink-0">
-                            {cat.skills.length + 5}
-                          </span>
-                          <span className="inline-block w-2 h-4 bg-primary/70 animate-pulse" />
+                          <span className="text-muted-foreground/40">"</span>
+                          {i < activeCategory.skills.length - 1 && (
+                            <span className="text-muted-foreground">,</span>
+                          )}
                         </div>
                       </div>
-                    );
-                  })()}
+                    ))}
+                    <div className="flex items-start gap-4 mb-1">
+                      <span className="text-muted-foreground/30 text-xs w-5 text-right shrink-0 mt-0.5">
+                        {activeCategory.skills.length + 3}
+                      </span>
+                      <div>
+                        <span className="text-foreground">]</span>
+                        <span className="text-muted-foreground/40 ml-1">as const;</span>
+                      </div>
+                    </div>
+                    <div className="flex items-start gap-4 mt-2">
+                      <span className="text-muted-foreground/30 text-xs w-5 text-right shrink-0">
+                        {activeCategory.skills.length + 5}
+                      </span>
+                      <span className="inline-block w-2 h-4 bg-primary/70 animate-pulse" />
+                    </div>
+                  </div>
                 </div>
 
                 {/* Minimap / Stats Panel */}
                 <div className="w-48 shrink-0 border-l border-border bg-[hsl(222,44%,7%)] p-4 hidden xl:block">
                   <p className="text-[10px] font-heading text-muted-foreground/40 uppercase tracking-widest mb-4">
-                    Overview
+                    {sk.overview}
                   </p>
                   <div className="space-y-3">
                     {skillCategories.map((cat, i) => {
-                      const Icon = cat.icon;
                       const isActive = activeTab === i;
                       return (
-                        <button
-                          key={cat.key}
-                          onClick={() => setActiveTab(i)}
-                          className="w-full text-left"
-                        >
+                        <button key={cat.key} onClick={() => setActiveTab(i)} className="w-full text-left">
                           <div className="flex items-center justify-between mb-1">
                             <span className={`text-[10px] font-heading transition-colors ${isActive ? cat.color : "text-muted-foreground/50"}`}>
                               .{cat.label}
                             </span>
-                            <span className="text-[10px] text-muted-foreground/30">
-                              {cat.skills.length}
-                            </span>
+                            <span className="text-[10px] text-muted-foreground/30">{cat.skills.length}</span>
                           </div>
                           <div className="h-1 rounded-full bg-border overflow-hidden">
                             <div
                               className={`h-full rounded-full transition-all duration-500 ${isActive ? "opacity-100" : "opacity-30"}`}
                               style={{
-                                width: `${(cat.skills.length / 14) * 100}%`,
-                                background: isActive
-                                  ? "hsl(174, 72%, 56%)"
-                                  : "hsl(222, 30%, 30%)",
+                                width: `${(cat.skills.length / maxSkills) * 100}%`,
+                                background: isActive ? "hsl(174, 72%, 56%)" : "hsl(222, 30%, 30%)",
                               }}
                             />
                           </div>
@@ -271,12 +224,12 @@ const SkillsSection = () => {
 
                   <div className="mt-6 pt-4 border-t border-border">
                     <p className="text-[10px] font-heading text-muted-foreground/40 uppercase tracking-widest mb-2">
-                      Total
+                      {sk.total}
                     </p>
                     <p className="text-2xl font-heading font-bold text-primary">
                       {skillCategories.reduce((acc, cat) => acc + cat.skills.length, 0)}
                     </p>
-                    <p className="text-[10px] text-muted-foreground/50">technologies</p>
+                    <p className="text-[10px] text-muted-foreground/50">{sk.technologies}</p>
                   </div>
                 </div>
               </div>
@@ -288,10 +241,8 @@ const SkillsSection = () => {
                   <span>UTF-8</span>
                 </div>
                 <div className="flex items-center gap-4">
-                  <span>
-                    {skillCategories[activeTab].key}: {skillCategories[activeTab].skills.length} items
-                  </span>
-                  <span>Ln {skillCategories[activeTab].skills.length + 5}, Col 1</span>
+                  <span>{activeCategory.key}: {activeCategory.skills.length} items</span>
+                  <span>Ln {activeCategory.skills.length + 5}, Col 1</span>
                 </div>
               </div>
             </div>
@@ -301,12 +252,9 @@ const SkillsSection = () => {
         {/* Mobile: Card Layout */}
         <div className="md:hidden">
           <ScrollReveal>
-            {/* Category Tabs */}
-            <div className="flex gap-2 overflow-x-auto pb-3 mb-4 -mx-1 px-1"
-              style={{ scrollbarWidth: "none" }}
-            >
+            <div className="flex gap-2 overflow-x-auto pb-3 mb-4 -mx-1 px-1" style={{ scrollbarWidth: "none" }}>
               {skillCategories.map((cat, index) => {
-                const Icon = cat.icon;
+                const Icon = iconMap[cat.icon] ?? Code;
                 const isActive = activeTab === index;
                 return (
                   <button
@@ -319,39 +267,31 @@ const SkillsSection = () => {
                     }`}
                   >
                     <Icon size={13} />
-                    .{skillCategories[index].label}
+                    .{cat.label}
                   </button>
                 );
               })}
             </div>
 
-            {/* Active Category Card */}
             <div className="rounded-xl overflow-hidden border border-border">
-              {/* Card Header */}
               <div className="flex items-center gap-3 px-4 py-3 bg-[hsl(222,44%,7%)] border-b border-border">
                 {(() => {
-                  const Icon = skillCategories[activeTab].icon;
-                  const cat = skillCategories[activeTab];
+                  const Icon = iconMap[activeCategory.icon] ?? Code;
                   return (
                     <>
-                      <Icon size={14} className={cat.color} />
-                      <span className={`text-xs font-heading ${cat.color}`}>
-                        .{cat.key}
-                      </span>
-                      <span className="ml-auto text-xs text-muted-foreground/50 font-heading">
-                        {cat.skills.length} items
-                      </span>
+                      <Icon size={14} className={activeCategory.color} />
+                      <span className={`text-xs font-heading ${activeCategory.color}`}>.{activeCategory.key}</span>
+                      <span className="ml-auto text-xs text-muted-foreground/50 font-heading">{activeCategory.skills.length} items</span>
                     </>
                   );
                 })()}
               </div>
-              {/* Skills Grid */}
               <div className="p-4 bg-[hsl(222,44%,8%)]">
                 <div className="flex flex-wrap gap-2">
-                  {skillCategories[activeTab].skills.map((skill) => (
+                  {activeCategory.skills.map((skill) => (
                     <span
                       key={skill}
-                      className={`px-3 py-1.5 rounded-lg text-sm font-heading font-medium border transition-all duration-200 ${skillCategories[activeTab].bgColor} ${skillCategories[activeTab].borderColor} ${skillCategories[activeTab].color}`}
+                      className={`px-3 py-1.5 rounded-lg text-sm font-heading font-medium border transition-all duration-200 ${activeCategory.bg_color} ${activeCategory.border_color} ${activeCategory.color}`}
                     >
                       "{skill}"
                     </span>
@@ -360,7 +300,6 @@ const SkillsSection = () => {
               </div>
             </div>
 
-            {/* Dots */}
             <div className="flex justify-center gap-1.5 mt-4">
               {skillCategories.map((_, index) => (
                 <button

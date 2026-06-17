@@ -4,8 +4,11 @@ import emailjs from "@emailjs/browser";
 import ScrollReveal from "./ScrollReveal";
 import { useToast } from "@/hooks/use-toast";
 import { EMAILJS_CONFIG } from "@/config/emailjs";
+import { useLang } from "@/contexts/LanguageContext";
 
 const ContactSection = () => {
+  const { t } = useLang();
+  const c = t.contact;
   const [formData, setFormData] = useState({ name: "", email: "", subject: "", message: "" });
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [isSending, setIsSending] = useState(false);
@@ -13,11 +16,11 @@ const ContactSection = () => {
 
   const validate = () => {
     const newErrors: Record<string, string> = {};
-    if (!formData.name.trim()) newErrors.name = "Name is required";
-    if (!formData.email.trim()) newErrors.email = "Email is required";
-    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) newErrors.email = "Invalid email format";
-    if (!formData.subject.trim()) newErrors.subject = "Subject is required";
-    if (!formData.message.trim()) newErrors.message = "Message is required";
+    if (!formData.name.trim())    newErrors.name    = c.errors.nameRequired;
+    if (!formData.email.trim())   newErrors.email   = c.errors.emailRequired;
+    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) newErrors.email = c.errors.emailInvalid;
+    if (!formData.subject.trim()) newErrors.subject = c.errors.subjectRequired;
+    if (!formData.message.trim()) newErrors.message = c.errors.messageRequired;
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -25,56 +28,25 @@ const ContactSection = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!validate()) {
-      toast({ title: "Please fix the errors", description: "All fields are required.", variant: "destructive" });
+      toast({ title: c.errors.fixErrors, description: c.errors.allRequired, variant: "destructive" });
       return;
     }
 
     setIsSending(true);
     try {
-      const name = formData.name.trim();
-      const email = formData.email.trim();
-      const subject = formData.subject.trim();
-      const message = formData.message.trim();
-
-      const templateParams: Record<string, string> = {
-        // common variants so it matches whatever variables your template uses
-        name,
-        from_name: name,
-        user_name: name,
-        email,
-        from_email: email,
-        user_email: email,
-        reply_to: email,
-        subject,
-        title: subject,
-        message,
-        user_message: message,
-        date: new Date().toLocaleString(),
-        time: new Date().toLocaleString(),
-        to_email: EMAILJS_CONFIG.TO_EMAIL,
-      };
-
-      const response = await emailjs.send(
+      const { name, email, subject, message } = formData;
+      await emailjs.send(
         EMAILJS_CONFIG.SERVICE_ID,
         EMAILJS_CONFIG.TEMPLATE_ID,
-        templateParams,
+        { name, from_name: name, user_name: name, email, from_email: email, user_email: email, reply_to: email, subject, title: subject, message, user_message: message, date: new Date().toLocaleString(), to_email: EMAILJS_CONFIG.TO_EMAIL },
         { publicKey: EMAILJS_CONFIG.PUBLIC_KEY }
       );
-
-      console.log("EmailJS success:", response);
-      toast({ title: "Message sent successfully!", description: "Thanks for reaching out — I'll get back to you soon." });
+      toast({ title: c.successTitle, description: c.successDesc });
       setFormData({ name: "", email: "", subject: "", message: "" });
       setErrors({});
     } catch (err: any) {
-      console.error("EmailJS error:", err);
-      const detail =
-        (err && (err.text || err.message)) ||
-        (typeof err === "string" ? err : "Something went wrong. Please try again.");
-      toast({
-        title: "Failed to send message",
-        description: String(detail),
-        variant: "destructive",
-      });
+      const detail = (err && (err.text || err.message)) || (typeof err === "string" ? err : "Something went wrong.");
+      toast({ title: c.errorTitle, description: String(detail), variant: "destructive" });
     } finally {
       setIsSending(false);
     }
@@ -86,20 +58,17 @@ const ContactSection = () => {
       <div className="section-container relative z-10">
         <ScrollReveal>
           <div className="flex items-center gap-3 mb-2">
-            <span className="font-heading text-primary text-sm">05.</span>
-            <h2 className="section-heading">Contact</h2>
-            <div className="hidden sm:block flex-1 h-px bg-border ml-4" />
+            <span className="font-heading text-sm gradient-animated">{c.num}</span>
+            <h2 className="section-heading">{c.title}</h2>
+            <div className="hidden sm:block flex-1 h-px bg-border ms-4" />
           </div>
-          <p className="section-subheading">Let's work together</p>
+          <p className="section-subheading">{c.subtitle}</p>
         </ScrollReveal>
 
         <div className="grid md:grid-cols-2 gap-8 sm:gap-12">
           <ScrollReveal delay={0.1} direction="left">
             <div className="space-y-8">
-              <p className="text-muted-foreground leading-relaxed">
-                I'm always open to discussing new projects, creative ideas, or opportunities to be
-                part of your vision. Feel free to reach out!
-              </p>
+              <p className="text-muted-foreground leading-relaxed">{c.description}</p>
 
               <div className="space-y-4">
                 <a href="mailto:omarmokhtar20015@gmail.com" className="flex items-center gap-4 group">
@@ -107,7 +76,7 @@ const ContactSection = () => {
                     <Mail size={20} className="text-primary" />
                   </div>
                   <div>
-                    <p className="text-xs text-muted-foreground uppercase tracking-wider">Email</p>
+                    <p className="text-xs text-muted-foreground uppercase tracking-wider">{c.emailLabel}</p>
                     <p className="text-foreground group-hover:text-primary transition-colors">omarmokhtar20015@gmail.com</p>
                   </div>
                 </a>
@@ -117,7 +86,7 @@ const ContactSection = () => {
                     <Phone size={20} className="text-primary" />
                   </div>
                   <div>
-                    <p className="text-xs text-muted-foreground uppercase tracking-wider">Phone</p>
+                    <p className="text-xs text-muted-foreground uppercase tracking-wider">{c.phoneLabel}</p>
                     <p className="text-foreground group-hover:text-primary transition-colors">+20 (114) 022-9621</p>
                   </div>
                 </a>
@@ -127,8 +96,8 @@ const ContactSection = () => {
                     <MapPin size={20} className="text-primary" />
                   </div>
                   <div>
-                    <p className="text-xs text-muted-foreground uppercase tracking-wider">Location</p>
-                    <p className="text-foreground">Giza, Egypt</p>
+                    <p className="text-xs text-muted-foreground uppercase tracking-wider">{c.locationLabel}</p>
+                    <p className="text-foreground">{c.location}</p>
                   </div>
                 </div>
               </div>
@@ -138,64 +107,48 @@ const ContactSection = () => {
           <ScrollReveal delay={0.2} direction="right">
             <form onSubmit={handleSubmit} className="space-y-5">
               <div>
-                <label htmlFor="name" className="block text-sm font-medium text-foreground mb-2">Name</label>
-                <input
-                  id="name" type="text" value={formData.name}
+                <label htmlFor="name" className="block text-sm font-medium text-foreground mb-2">{c.nameLabel}</label>
+                <input id="name" type="text" value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                   className="w-full px-4 py-3 rounded-lg bg-card border border-border text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all"
-                  placeholder="Your name"
-                />
+                  placeholder={c.namePlaceholder} />
                 {errors.name && <p className="text-destructive text-xs mt-1">{errors.name}</p>}
               </div>
 
               <div>
-                <label htmlFor="email" className="block text-sm font-medium text-foreground mb-2">Email</label>
-                <input
-                  id="email" type="email" value={formData.email}
+                <label htmlFor="email" className="block text-sm font-medium text-foreground mb-2">{c.emailFieldLabel}</label>
+                <input id="email" type="email" value={formData.email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                   className="w-full px-4 py-3 rounded-lg bg-card border border-border text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all"
-                  placeholder="your@email.com"
-                />
+                  placeholder={c.emailPlaceholder} />
                 {errors.email && <p className="text-destructive text-xs mt-1">{errors.email}</p>}
               </div>
 
               <div>
-                <label htmlFor="subject" className="block text-sm font-medium text-foreground mb-2">Subject</label>
-                <input
-                  id="subject" type="text" value={formData.subject}
+                <label htmlFor="subject" className="block text-sm font-medium text-foreground mb-2">{c.subjectLabel}</label>
+                <input id="subject" type="text" value={formData.subject}
                   onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
                   className="w-full px-4 py-3 rounded-lg bg-card border border-border text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all"
-                  placeholder="Message subject"
-                />
+                  placeholder={c.subjectPlaceholder} />
                 {errors.subject && <p className="text-destructive text-xs mt-1">{errors.subject}</p>}
               </div>
 
               <div>
-                <label htmlFor="message" className="block text-sm font-medium text-foreground mb-2">Message</label>
-                <textarea
-                  id="message" rows={5} value={formData.message}
+                <label htmlFor="message" className="block text-sm font-medium text-foreground mb-2">{c.messageLabel}</label>
+                <textarea id="message" rows={5} value={formData.message}
                   onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                   className="w-full px-4 py-3 rounded-lg bg-card border border-border text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all resize-none"
-                  placeholder="Your message..."
-                />
+                  placeholder={c.messagePlaceholder} />
                 {errors.message && <p className="text-destructive text-xs mt-1">{errors.message}</p>}
               </div>
 
-              <button
-                type="submit"
-                disabled={isSending}
+              <button type="submit" disabled={isSending}
                 className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-primary text-primary-foreground font-medium text-sm transition-all hover:shadow-lg hover:shadow-primary/25 hover:scale-105 active:scale-95 disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:scale-100"
               >
                 {isSending ? (
-                  <>
-                    <Loader2 size={18} className="animate-spin" />
-                    Sending...
-                  </>
+                  <><Loader2 size={18} className="animate-spin" />{c.sending}</>
                 ) : (
-                  <>
-                    <Send size={18} />
-                    Send Message
-                  </>
+                  <><Send size={18} />{c.send}</>
                 )}
               </button>
             </form>

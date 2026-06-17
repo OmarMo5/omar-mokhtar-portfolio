@@ -2,23 +2,22 @@ import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { MapPin, ArrowDown, Github, Linkedin, Mail } from "lucide-react";
 import profilePhoto from "@/assets/profile-photo1.png";
-
-const roles = [
-  "Software Developer",
-  "Backend Engineer",
-  "PHP/Laravel Specialist",
-  "AI Enthusiast",
-];
+import { useLang } from "@/contexts/LanguageContext";
 
 const HeroSection = () => {
+  const { t } = useLang();
   const [currentRole, setCurrentRole] = useState(0);
 
   useEffect(() => {
+    setCurrentRole(0);
+  }, [t]);
+
+  useEffect(() => {
     const interval = setInterval(() => {
-      setCurrentRole((prev) => (prev + 1) % roles.length);
+      setCurrentRole((prev) => (prev + 1) % t.hero.roles.length);
     }, 3000);
     return () => clearInterval(interval);
-  }, []);
+  }, [t]);
 
   const scrollToAbout = () => {
     document.getElementById("about")?.scrollIntoView({ behavior: "smooth" });
@@ -30,8 +29,24 @@ const HeroSection = () => {
       className="relative min-h-screen flex items-center justify-center overflow-hidden"
       style={{ background: "var(--gradient-hero)" }}
     >
-      {/* Animated background particles */}
-      <div className="absolute inset-0 overflow-hidden">
+      {/* Animated blobs */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div
+          className="animate-blob-1 absolute rounded-full blur-3xl hero-blob"
+          style={{ width: 500, height: 500, top: "-10%", left: "-5%", background: "radial-gradient(circle, hsl(174,72%,56%) 0%, hsl(199,89%,48%) 60%, transparent 100%)" }}
+        />
+        <div
+          className="animate-blob-2 absolute rounded-full blur-3xl hero-blob"
+          style={{ width: 420, height: 420, top: "30%", right: "-8%", background: "radial-gradient(circle, hsl(199,89%,60%) 0%, hsl(174,60%,50%) 60%, transparent 100%)" }}
+        />
+        <div
+          className="animate-blob-3 absolute rounded-full blur-3xl hero-blob"
+          style={{ width: 350, height: 350, bottom: "5%", left: "35%", background: "radial-gradient(circle, hsl(174,72%,56%) 0%, hsl(199,89%,48%) 60%, transparent 100%)" }}
+        />
+      </div>
+
+      {/* Floating particles */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
         {[...Array(20)].map((_, i) => (
           <motion.div
             key={i}
@@ -60,14 +75,14 @@ const HeroSection = () => {
       <div className="section-container relative z-10 py-12 sm:py-20">
         <div className="flex flex-col-reverse lg:flex-row items-center gap-8 lg:gap-16">
           {/* Text content */}
-          <div className="flex-1 text-center lg:text-left">
+          <div className="flex-1 text-center lg:text-start">
             <motion.p
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2, duration: 0.6 }}
               className="font-heading text-primary text-sm md:text-base mb-4 tracking-wider"
             >
-              Hello, my name is
+              {t.hero.greeting}
             </motion.p>
 
             <motion.h1
@@ -83,9 +98,9 @@ const HeroSection = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.6, duration: 0.6 }}
-              className="text-xl sm:text-3xl md:text-5xl font-bold mb-4 sm:mb-6 h-10 sm:h-14 md:h-16 flex items-center justify-center lg:justify-start"
+              className="text-xl sm:text-3xl md:text-5xl font-bold mb-4 sm:mb-6 h-10 sm:h-14 md:h-16 flex items-center justify-center lg:justify-start rtl:lg:justify-end"
             >
-              <span className="text-muted-foreground">I'm a </span>
+              <span className="text-muted-foreground">{t.hero.iAm} </span>
               <motion.span
                 key={currentRole}
                 initial={{ opacity: 0, y: 20 }}
@@ -94,7 +109,7 @@ const HeroSection = () => {
                 transition={{ duration: 0.4 }}
                 className="text-gradient ml-2"
               >
-                {roles[currentRole]}
+                {t.hero.roles[currentRole]}
               </motion.span>
             </motion.div>
 
@@ -102,35 +117,33 @@ const HeroSection = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.8, duration: 0.6 }}
-              className="text-muted-foreground text-base md:text-lg max-w-2xl mb-4 leading-relaxed mx-auto lg:mx-0"
+              className="text-muted-foreground text-base md:text-lg max-w-2xl mb-4 leading-relaxed mx-auto lg:ms-0"
             >
-              Software Engineer specialized in Back-End development with solid experience
-              in Front-End technologies. Passionate about building scalable, high-quality
-              web applications and continuously improving software engineering skills.
+              {t.hero.bio}
             </motion.p>
 
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 1, duration: 0.6 }}
-              className="flex items-center gap-2 text-muted-foreground text-sm mb-8 justify-center lg:justify-start"
+              className="flex items-center gap-2 text-muted-foreground text-sm mb-8 justify-center lg:justify-start rtl:lg:justify-end"
             >
               <MapPin size={16} className="text-primary" />
-              <span>Giza, Egypt</span>
+              <span>{t.hero.location}</span>
             </motion.div>
 
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 1.1, duration: 0.6 }}
-              className="flex flex-wrap gap-2.5 sm:gap-4 justify-center lg:justify-start"
+              className="flex flex-wrap gap-2.5 sm:gap-4 justify-center lg:justify-start rtl:lg:justify-end"
             >
               <button
                 onClick={() => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })}
                 className="inline-flex items-center gap-2 px-4 sm:px-6 py-2.5 sm:py-3 rounded-lg bg-primary text-primary-foreground font-medium text-xs sm:text-sm transition-all hover:shadow-lg hover:shadow-primary/25 hover:scale-105 active:scale-95"
               >
                 <Mail size={18} />
-                Get In Touch
+                {t.hero.getInTouch}
               </button>
               <a
                 href="https://drive.google.com/file/d/1iAv7jwqZAXHIOQd2sq4mZjSmdgG3h8Vk/view?usp=sharing"
@@ -139,7 +152,7 @@ const HeroSection = () => {
                 className="inline-flex items-center gap-2 px-4 sm:px-6 py-2.5 sm:py-3 rounded-lg bg-secondary text-secondary-foreground font-medium text-xs sm:text-sm transition-all hover:shadow-lg hover:shadow-primary/25 hover:scale-105 active:scale-95"
               >
                 <ArrowDown size={18} />
-                Download CV
+                {t.hero.downloadCV}
               </a>
               <a
                 href="https://github.com/OmarMo5"
@@ -193,6 +206,15 @@ const HeroSection = () => {
                 animate={{ scale: [1, 1.4, 1] }}
                 transition={{ duration: 2.5, repeat: Infinity, delay: 0.5 }}
               />
+              {/* Floating stat badges */}
+              <div className="badge-float absolute -bottom-4 -left-6 sm:-left-12 flex items-center gap-2 px-3 py-2 rounded-xl bg-card border border-border shadow-xl text-xs font-heading whitespace-nowrap backdrop-blur-sm">
+                <span className="text-primary font-bold text-sm">20+</span>
+                <span className="text-muted-foreground">{t.hero.projectsDone ?? "Projects"}</span>
+              </div>
+              <div className="badge-float-delayed absolute -top-4 -right-4 sm:-right-10 flex items-center gap-2 px-3 py-2 rounded-xl bg-card border border-border shadow-xl text-xs font-heading whitespace-nowrap backdrop-blur-sm">
+                <span className="text-primary font-bold text-sm">2+</span>
+                <span className="text-muted-foreground">{t.hero.yearsExp ?? "Years Exp."}</span>
+              </div>
             </div>
           </motion.div>
         </div>
