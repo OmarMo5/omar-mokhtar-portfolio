@@ -19,12 +19,12 @@ interface SkillCategory {
 
 const fallbackCategories: SkillCategory[] = [
   { key: "languages", label: "languages", icon: "Code", color: "text-[#e06c75]", bg_color: "bg-[#e06c75]/10", border_color: "border-[#e06c75]/30", skills: ["C", "Java", "Python"] },
-  { key: "backend", label: "backend", icon: "Server", color: "text-[#61afef]", bg_color: "bg-[#61afef]/10", border_color: "border-[#61afef]/30", skills: ["PHP", "Laravel", "Livewire", "Filament", "Redis", "WordPress"] },
+  { key: "backend", label: "backend", icon: "Server", color: "text-[#61afef]", bg_color: "bg-[#61afef]/10", border_color: "border-[#61afef]/30", skills: ["PHP", "Laravel", "Livewire", "Filament", "Redis", "WordPress", "Node.js", "Express.js"] },
   { key: "frontend", label: "frontend", icon: "Layout", color: "text-[#98c379]", bg_color: "bg-[#98c379]/10", border_color: "border-[#98c379]/30", skills: ["HTML", "CSS", "Bootstrap", "Material UI", "ShadCN UI", "JavaScript", "TypeScript", "jQuery", "React.js", "Hooks", "Redux", "Context API", "Toolkit", "Next.js"] },
   { key: "database", label: "database", icon: "Database", color: "text-[#e5c07b]", bg_color: "bg-[#e5c07b]/10", border_color: "border-[#e5c07b]/30", skills: ["MySQL", "SQL Server", "Oracle"] },
   { key: "concepts", label: "concepts", icon: "Lightbulb", color: "text-[#c678dd]", bg_color: "bg-[#c678dd]/10", border_color: "border-[#c678dd]/30", skills: ["Data Structures", "Databases", "OOP & SOLID Principles", "Clean Code", "Design Patterns"] },
   { key: "tools", label: "tools", icon: "Wrench", color: "text-[#56b6c2]", bg_color: "bg-[#56b6c2]/10", border_color: "border-[#56b6c2]/30", skills: ["Git & GitHub", "n8n Automation", "Docker"] },
-  { key: "softSkills", label: "softSkills", icon: "Users", color: "text-primary", bg_color: "bg-primary/10", border_color: "border-primary/30", skills: ["Problem Solving", "Communication", "Teamwork & Collaboration", "Adaptability"] },
+  { key: "softSkills", label: "softSkills", icon: "Users", color: "text-primary", bg_color: "bg-primary/10", border_color: "border-primary/30", skills: ["Problem Solving", "Communication", "Teamwork & Collaboration", "Adaptability", "Agile", "Scrum"] },
 ];
 
 const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:8000/api";
