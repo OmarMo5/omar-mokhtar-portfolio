@@ -30,7 +30,7 @@ export const translations = {
       title: "About Me",
       subtitle: "Get to know me better",
       stats: [
-        { value: "2+", label: "Years Experience" },
+        { value: "3+", label: "Years Experience" },
         { value: "3",  label: "Companies" },
         { value: "40+",label: "Technologies" },
         { value: "∞",  label: "Lines of Code" },
