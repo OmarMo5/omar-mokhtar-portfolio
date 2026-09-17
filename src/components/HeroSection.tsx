@@ -212,7 +212,7 @@ const HeroSection = () => {
                 <span className="text-muted-foreground">{t.hero.projectsDone ?? "Projects"}</span>
               </div>
               <div className="badge-float-delayed absolute -top-4 -right-4 sm:-right-10 flex items-center gap-2 px-3 py-2 rounded-xl bg-card border border-border shadow-xl text-xs font-heading whitespace-nowrap backdrop-blur-sm">
-                <span className="text-primary font-bold text-sm">2+</span>
+                <span className="text-primary font-bold text-sm">3+</span>
                 <span className="text-muted-foreground">{t.hero.yearsExp ?? "Years Exp."}</span>
               </div>
             </div>

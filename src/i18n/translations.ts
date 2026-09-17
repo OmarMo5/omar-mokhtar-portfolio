@@ -210,7 +210,7 @@ export const translations = {
       title: "عني",
       subtitle: "تعرّف عليّ أكثر",
       stats: [
-        { value: "+2", label: "سنوات خبرة" },
+        { value: "+3", label: "سنوات خبرة" },
         { value: "3",  label: "شركات" },
         { value: "+40",label: "تقنية" },
         { value: "∞",  label: "سطر كود" },
